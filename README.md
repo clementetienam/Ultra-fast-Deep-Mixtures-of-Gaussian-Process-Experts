@@ -1,4 +1,5 @@
 Ultra-fast-Deep-Mixture-of-Gaussian-Experts:
+---------------------------------------------
 This paper considers efficient approaches to the computation of maximum a posteriori (MAP)
 estimators of Mixture of Expert models which are computed using a maximization-maximization approach.
  by iteratively maximizing the distribution of experts given allocations
@@ -12,15 +13,18 @@ estimators of Mixture of Expert models which are computed using a maximization-m
  extremely quickly. This approximation can then be further refined 
  with the iterative algorithm.
 
-Getting Started
+Getting Started:
+---------------------------------
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 See deployment for notes on how to deploy the project on a live system.
 
 
-Prerequisites
+Prerequisites:
+-------------------------------
 MATLAB 2015 upwards
 
 Methods:
+-------------------------------
 Three methods are available for the supervised learning problem;
 - CCR: 1 pass Sparse Gaussian process experts with a Deep Neural network gating network
 - CCR-MM: Iterative Sparse Gaussian process experts with a Deep Neural network gating network with K-means for initialisation of latent variables 
@@ -33,7 +37,7 @@ and K-means for initialising the inducing points
 -----------------------------
 The 10 datasets used in the paper are provided in the script, together with an extra 4 datasets.
 
-Running the Numerical Experiment
+Running the Numerical Experiment:
 Run the script Main.m following the prompts on the screen
 
 2. Dependencies
@@ -44,23 +48,27 @@ Run the script Main.m following the prompts on the screen
 All libraries are included for your convenience.
 
 3. Manuscript
+-----------------------------
 
 4. Extras
------------------------------
+--------------------------------------
 Extra methods are included also;
 - Running supervised learning models with DNN and MLP alone (Requires the netlab and MATLAB DNN tool box)
 - Running CCR/CCR-MM and MM-MM with DNN/DNN for the experts ad gates respectively and MLP/DNN for the experts and gates respectively (Requires netlab and MATLAB DNN toolbox)
 
-Author
+Author:
+--------------------------------
 Dr Clement Etienam- Postdoctoral Research Associate, Oak Ridge National Laboratory(ORNL)/School of Mathematics, University of Manchester 
 
 In Collaboration with:
+---------------------------------
 Professor Kody Law- Postdoctoral Supervisor and Chair of Applied Mathematics at the School of Mathematics, University of Manchester 
 
 Professor Sara Wade- Senior Lecturer in Applied Mathematics & Statistics University of Edinburgh
 
 
-Acknowledgments
+Acknowledgments:
+------------------------------
 This work is supported by the U.S. Department of Energy, Office of Science, Office of Advanced Scientific Computing Research (ASCR) 
 Scientific Discovery through Advanced Computing (SciDAC) project on Advanced Tokamak Modelling (AToM), under field work proposal number ERKJ123.
 
