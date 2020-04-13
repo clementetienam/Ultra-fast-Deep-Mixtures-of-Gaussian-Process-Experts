@@ -1,4 +1,5 @@
-Ultra-fast-Deep-Mixture-of-Gaussian-Experts
+#Ultra-fast-Deep-Mixture-of-Gaussian-Experts#
+Ultra-fast-Deep-Mixture-of-Gaussian-Experts:
 This paper presents a method for solving the supervised learning problem in which the output is highly non-linear and discontinuous. 
 It is proposed to solve this problem in three stages: (i) cluster the pairs of input-output data points, resulting
 in a label for each point; (ii) classify the data, where the corresponding label is the output; and finally 
