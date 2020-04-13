@@ -33,28 +33,30 @@ and inducing points
 and K-means for initialising the inducing points
 
 
-1. Datasets
+Datasets
 -----------------------------
 The 10 datasets used in the paper are provided in the script, together with an extra 4 datasets.
 
 Running the Numerical Experiment:
 Run the script Main.m following the prompts on the screen
 
-2. Dependencies
+Dependencies
 ----------------------------
 - CCR,CCR-MM and MM-MM requires the : GPML [12] in addition to my own library of utility functions (CKS/CKS_DNN/CKS_MLP)
 - The CKS's ;library contains necessary scripts for visualisation, Running the Neural Network and computing some hard and soft predictions
 
 All libraries are included for your convenience.
 
-3. Manuscript
+Manuscript
 -----------------------------
 
-4. Extras
+Extras
 --------------------------------------
 Extra methods are included also;
 - Running supervised learning models with DNN and MLP alone (Requires the netlab and MATLAB DNN tool box)
 - Running CCR/CCR-MM and MM-MM with DNN/DNN for the experts ad gates respectively and MLP/DNN for the experts and gates respectively (Requires netlab and MATLAB DNN toolbox)
+- Running the MM method for only 2 iterations using Sparse Gp experts and DNN gates
+- Running an ensemble paradigm of the CCR-MM and MM-MM to quantify total uncertainty
 
 Author:
 --------------------------------
