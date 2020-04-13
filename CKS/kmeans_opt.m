@@ -29,18 +29,18 @@ function [IDX,C,SUMD,K]=kmeans_opt(X,varargin)
 %%% Thomas.sauter@uni.lu
 [m,~]=size(X); %getting the number of samples
 if nargin>1, ToTest=cell2mat(varargin(1)); else, ToTest=ceil(sqrt(m)); end
-if nargin>2, Cutoff=cell2mat(varargin(2)); else, Cutoff=0.95; end
-if nargin>3, Repeats=cell2mat(varargin(3)); else, Repeats=3; end
+if nargin>2, Cutoff=cell2mat(varargin(2)); else, Cutoff=0.8; end
+if nargin>3, Repeats=cell2mat(varargin(3)); else, Repeats=10; end
 %unit-normalize
 MIN=min(X); MAX=max(X); 
 X=(X-MIN)./(MAX-MIN);
 D=zeros(ToTest,1); %initialize the results matrix
 for c=1:ToTest %for each sample
-    [~,~,dist]=kmeans(X,c,'emptyaction','drop'); %compute the sum of intra-cluster distances
+    [~,~,dist]=kmeans(X,c,'emptyaction','drop','MaxIter',1000); %compute the sum of intra-cluster distances
     tmp=sum(dist); %best so far
     
     for cc=2:Repeats %repeat the algo
-        [~,~,dist]=kmeans(X,c,'emptyaction','drop','MaxIter',500);
+        [~,~,dist]=kmeans(X,c,'emptyaction','drop','MaxIter','MaxIter',1000);
         tmp=min(sum(dist),tmp);
     end
     D(c,1)=tmp; %collect the best so far in the results vecor
