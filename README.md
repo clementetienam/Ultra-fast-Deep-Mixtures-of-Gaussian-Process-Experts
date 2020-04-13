@@ -1,11 +1,16 @@
 Ultra-fast-Deep-Mixture-of-Gaussian-Experts:
-This paper presents a method for solving the supervised learning problem in which the output is highly non-linear and discontinuous. 
-It is proposed to solve this problem in three stages: (i) cluster the pairs of input-output data points, resulting
-in a label for each point; (ii) classify the data, where the corresponding label is the output; and finally 
-(iii) perform one separate regression for each class,where the training data corresponds to the subset of the original input-output pairs 
-which have that label according to the classifier. It has not yet been proposed to combine these 3 fundamental building blocks of machine learning 
-in this simple and powerful fashion. This can be viewed as a form of super-deep learning, where any
-of the intermediate layers can itself be deep. The utility and robustness of the methodology is illustrated on some toy problems.
+This paper considers efficient approaches to the computation of maximum a posteriori (MAP)
+estimators of Mixture of Expert models which are computed %using a maximization-maximization approach.
+ by iteratively maximizing the distribution of experts given allocations
+ and allocations given experts. 
+ Deep neural networks are used for 
+ the gating network and sparse Gaussian processes are used for the 
+ experts. This combination forms a robust and efficient model which is able
+ to significantly outperform competing methods. 
+ We also show that a recently introduced method called CCR 
+ is capable of providing a good approximation of the optimizer 
+ extremely quickly. This approximation can then be further refined 
+ with the iterative algorithm.
 
 Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
