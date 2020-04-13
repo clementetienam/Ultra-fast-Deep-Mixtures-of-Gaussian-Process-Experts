@@ -1,6 +1,6 @@
 Ultra-fast-Deep-Mixture-of-Gaussian-Experts:
 This paper considers efficient approaches to the computation of maximum a posteriori (MAP)
-estimators of Mixture of Expert models which are computed %using a maximization-maximization approach.
+estimators of Mixture of Expert models which are computed using a maximization-maximization approach.
  by iteratively maximizing the distribution of experts given allocations
  and allocations given experts. 
  Deep neural networks are used for 
