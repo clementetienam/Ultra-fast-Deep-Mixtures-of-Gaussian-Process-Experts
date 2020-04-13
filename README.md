@@ -1,6 +1,4 @@
-# An-ultra-fast-approximation-for-Mixtures-of-Experts-Cluster-Classify-Regress-CCR-
-An ultra-fast approximation for Mixtures of Experts: Cluster Classify Regress (CCR)
-
+Ultra-fast-Deep-Mixture-of-Gaussian-Experts
 This paper presents a method for solving the supervised learning problem in which the output is highly non-linear and discontinuous. 
 It is proposed to solve this problem in three stages: (i) cluster the pairs of input-output data points, resulting
 in a label for each point; (ii) classify the data, where the corresponding label is the output; and finally 
@@ -15,7 +13,7 @@ See deployment for notes on how to deploy the project on a live system.
 
 
 Prerequisites
-MATLAB 2016 upwards
+MATLAB 2015 upwards
 
 Methods:
 Three methods are available for the supervised learning problem;
@@ -36,7 +34,7 @@ Run the script Main.m following the prompts on the screen
 2. Dependencies
 ----------------------------
 - CCR,CCR-MM and MM-MM requires the : GPML [12] in addition to my own library of utility functions (CKS/CKS_DNN/CKS_MLP)
-- The CKS's ;library contains necessary scripts for visualisation, Running the Neural Network and computing some hard ad soft predictions
+- The CKS's ;library contains necessary scripts for visualisation, Running the Neural Network and computing some hard and soft predictions
 
 All libraries are included for your convenience.
 
@@ -48,15 +46,13 @@ Extra methods are included also;
 - Running supervised learning models with DNN and MLP alone (Requires the netlab and MATLAB DNN tool box)
 - Running CCR/CCR-MM and MM-MM with DNN/DNN for the experts ad gates respectively and MLP/DNN for the experts and gates respectively (Requires netlab and MATLAB DNN toolbox)
 
-
-
 Author
 Dr Clement Etienam- Postdoctoral Research Associate, Oak Ridge National Laboratory(ORNL)/School of Mathematics, University of Manchester 
 
 In Collaboration with:
 Professor Kody Law- Postdoctoral Supervisor and Chair of Applied Mathematics at the School of Mathematics, University of Manchester 
 
-Professor Sara Wade- University of Edinburgh
+Professor Sara Wade- Senior Lecturer in Applied Mathematics & Statistics University of Edinburgh
 
 
 Acknowledgments
