@@ -210,7 +210,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -288,7 +288,7 @@ if mummy==1
     elseif Datause ==7
     Experts=3;  
     elseif Datause ==8
-    Experts=6; 
+    Experts=13; 
     elseif Datause ==9
     Experts=6; 
     elseif Datause ==10
@@ -1067,7 +1067,7 @@ switch Datause
         cd(oldfolder);  
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -1141,8 +1141,13 @@ if mummy==1
         elseif Datause ==9
         Experts=12; 
         elseif Datause ==10
-        Experts=16;    
-    else
+        Experts=16; 
+    	elseif Datause ==11
+    	Experts=9; 
+    	elseif Datause ==12
+    	Experts=4;
+    	elseif Datause ==13
+    	else
         Experts=13;
     end
         
@@ -1895,7 +1900,7 @@ switch Datause
         cd(oldfolder);       
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -2171,7 +2176,7 @@ switch Datause
         cd(oldfolder);  
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -2241,7 +2246,7 @@ if mummy==1
     elseif Datause ==7
     Experts=3;  
     elseif Datause ==8
-    Experts=6; 
+    Experts=13; 
     elseif Datause ==9
     Experts=6; 
     elseif Datause ==10
@@ -2982,7 +2987,7 @@ switch Datause
         cd(oldfolder);       
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -3256,7 +3261,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -3336,7 +3341,7 @@ Experts=2;
     elseif Datause ==7
     Experts=3;  
     elseif Datause ==8
-    Experts=6; 
+    Experts=13; 
     elseif Datause ==9
     Experts=6; 
     elseif Datause ==10
@@ -4343,7 +4348,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        disp('Data not specified correctly');
+        error('Data not specified correctly');
 
 end
 
@@ -4420,7 +4425,7 @@ Experts=2;
     elseif Datause ==7
     Experts=3;  
     elseif Datause ==8
-    Experts=6; 
+    Experts=13; 
     elseif Datause ==9
     Experts=6; 
     elseif Datause ==10
