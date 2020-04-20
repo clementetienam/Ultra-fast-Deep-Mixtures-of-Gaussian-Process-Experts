@@ -29,6 +29,9 @@ if bigclement==1
 disp('1=Reproduce results in paper using Gp experts and DNN gate')
 disp('2=Try other combinatons of experts and Gates')
 Ultimate_Kody=input('Enter the option as stated above: ');
+if Ultimate_Kody > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %%
 if Ultimate_Kody==1
@@ -40,6 +43,9 @@ disp('3=Machine learning model using MLP alone')
 disp('4=Mixture of experts with DNN experts and DNN gate')
 disp('5=Machine learning model using DNN alone')
 Ultimate_clement=input('Enter the combinatons of experts and Gates desired: ');
+if (Ultimate_clement > 5) || (Ultimate_clement < 2)
+error('Wrong choice please select 2-5')
+end
 disp('*******************************************************************')
 end
 switch Ultimate_clement
@@ -210,7 +216,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly please select 1-14');
 
 end
 
@@ -231,6 +237,9 @@ disp('1:CCR')
 disp('2:CCR-MM')
 disp('3:MM-MM')
 method=input('Enter the learning scheme desired: ');
+if method > 3
+error('Wrong choice please select 1-3')
+end
 disp('*******************************************************************')
 %% Option to select the inducing points
 disp('SELECT OPTION FOR INITIALISING INDUCING POINTS')
@@ -238,6 +247,9 @@ disp('1:K-means') % This throws an error sometimes
 disp('2:Random')
 
 method2=input('Enter the options for initialising inducing points: ');
+if method2 > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Rescale data and then Split dataset to Train and Test;
 Xini=X;
@@ -270,6 +282,9 @@ disp('1:Recommended number of Experts') % This throws an error sometimes
 disp('2:User specific')
 
 mummy=input('Enter the options for choosing number of experts: ');
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Experts options
 if mummy==1
@@ -299,9 +314,9 @@ if mummy==1
     Experts=4;
     elseif Datause ==13
     Experts=3;     
-else
+    else
     Experts=3;
-end
+    end
         
 else
 disp('*******************************************************************')
@@ -326,7 +341,9 @@ disp('1:Pre-set options (As with the Paper)') % This throws an error sometimes
 disp('2:User prefered options')
 
 choicee=input('Enter the options for setting the NN classifier parameters: ');
-
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
 if choicee==1
     nnOptions = {'lambda', 0.1,...
             'maxIter', 1000,...
@@ -568,7 +585,7 @@ disp('*******************************************************************')
 R2now=R2ccr; 
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 weights=weights_updated;
 if i~=1
 dd = MM_clement(weights,X_train,y_train,modelNN,Class_all,Experts); 
@@ -614,7 +631,7 @@ if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
-    fprintf('Finished iteration %d... .\n', i);          
+    %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
@@ -735,7 +752,7 @@ cov = {@covSEiso};
 infv  = @(varargin) inf(varargin{:},struct('s',1.0));   
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 if i==1
 
  dd = randi(Experts,size(y_train,1),1);
@@ -769,7 +786,7 @@ parfor il=1:Experts
     Xtrains{il,1}=Xuse;
     ytrains{il,1}=yuse;
  end
- fprintf('Finished Expert %d... .\n', il);     
+ %fprintf('Finished Expert %d... .\n', il);     
 end
 
 if i==1
@@ -1067,7 +1084,7 @@ switch Datause
         cd(oldfolder);  
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, please select 1-14');
 
 end
 
@@ -1086,7 +1103,9 @@ disp('1:CCR')
 disp('2:CCR-MM')
 disp('3:MM-MM')
 method=input('Enter the learning scheme desired: ');
-
+if method > 3
+error('Wrong choice please select 1-3')
+end
 disp('*******************************************************************')
 %% Split dataset to Train and Test;    
 Xini=X;
@@ -1119,6 +1138,9 @@ disp('1:Recommended number of Experts') % This throws an error sometimes
 disp('2:User specific')
 
 mummy=input('Enter the options for choosing number of experts: ');
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Experts options
 if mummy==1
@@ -1174,7 +1196,9 @@ disp('1:Pre-set options (As with the Paper)')
 disp('2:User prefered options')
 
 choicee=input('Enter the options for setting the NN classifier parameters: ');
-
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
 if choicee==1
     nnOptions = {'lambda', 0.1,...
             'maxIter', 3000,...
@@ -1223,6 +1247,9 @@ disp('1: User prefered options (As with the Paper)') %
 disp('2: Pre-set  options')
 
 kodyy=input('Enter the options for setting the  NN regressors: ');
+if kodyy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 nin = size(X_train,2);			% input Layer.
 if kodyy==1
@@ -1421,7 +1448,7 @@ disp('*******************************************************************')
 R2now=R2ccr; 
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 weights=weights_updated;
 if i~=1
 dd = MM_clement_dnn(weights,X_train,y_train,modelNN,Class_all,Experts); 
@@ -1463,7 +1490,7 @@ if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
-    fprintf('Finished iteration %d... .\n', i);          
+    %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
@@ -1578,7 +1605,7 @@ tic;
 
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 if i==1
 
  dd = randi(Experts,size(y_train,1),1);
@@ -1635,13 +1662,13 @@ if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
 end
 %end
 R2now=R2;
-    fprintf('Finished iteration %d... .\n', i);          
+    %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
 % [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
-oldfolder=cd;
+%oldfolder=cd;
 cd(oldfolder) % setting original directory
 folder = 'Results_MM_MM';
 mkdir(folder);
@@ -1900,7 +1927,7 @@ switch Datause
         cd(oldfolder);       
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, please select 1-14');
 
 end
 
@@ -1948,6 +1975,9 @@ disp('1: User prefered options') %
 disp('2: Pre-set  options')
 
 kodyy=input('Enter the options for setting the  NN regressors: ');
+if kodyy > 2
+error('Wrong choice please select 1-2')
+end
 nin = size(X_train,2);			% input Layer.
 if kodyy==1
 disp('*******************************************************************')    
@@ -2176,7 +2206,7 @@ switch Datause
         cd(oldfolder);  
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, Please select 1-14');
 
 end
 
@@ -2195,7 +2225,9 @@ disp('1:CCR')
 disp('2:CCR-MM')
 disp('3:MM-MM')
 method=input('Enter the learning scheme desired: ');
-
+if method > 3
+error('Wrong choice please select 1-3')
+end
 disp('*******************************************************************')
 %% Split dataset to Train and Test;    
 Xini=X;
@@ -2228,6 +2260,9 @@ disp('1:Recommended number of Experts') % This throws an error sometimes
 disp('2:User specific')
 
 mummy=input('Enter the options for choosing number of experts: ');
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Experts options
 if mummy==1
@@ -2284,7 +2319,9 @@ disp('1:Pre-set options (As with the Paper)')
 disp('2:User prefered options')
 
 choicee=input('Enter the options for setting the NN classifier parameters: ');
-
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
 if choicee==1
     nnOptions = {'lambda', 0.1,...
             'maxIter', 1000,...
@@ -2443,7 +2480,7 @@ save('predict_soft.out','softanswer','-ascii')
 cd(oldfolder)
 
 elseif method==2
-disp('CCR-MM SCHEME')
+disp('-------------------------CCR-MM SCHEME----------------------------')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -2508,7 +2545,7 @@ disp('*******************************************************************')
 R2now=R2ccr; 
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 weights=weights_updated;
 if i~=1
 dd = MM_clement_dnn_2(weights,X_train,y_train,modelNN,Class_all,Experts); 
@@ -2550,7 +2587,7 @@ if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
-    fprintf('Finished iteration %d... .\n', i);          
+    %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
   [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
@@ -2658,14 +2695,14 @@ save('Valueevolution.out','valueallmm','-ascii')
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+disp('-----------------------------MM-MM SCHEME---------------------------') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
 
 %% Starting MM loop
  for i=1:Inf
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d... .\n', i); 
 if i==1
 
  dd = randi(Experts,size(y_train,1),1);
@@ -2722,7 +2759,7 @@ if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
 end
 %end
 R2now=R2;
-    fprintf('Finished iteration %d... .\n', i);          
+    %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
@@ -2827,10 +2864,10 @@ disp('*******************************************************************')
 rmpath('CKS_DNN')
 rmpath('netlab')
 rmpath('data')
-disp('PROGRAM EXECUTED SUCCESFULLY')       
+disp('---------------------PROGRAM EXECUTED SUCCESFULLY-------------------')       
 
     case 5
-  disp('BROAD OPTION OF FITTING A MODEL USING DNN ALONE')       
+  disp('-----------BROAD OPTION OF FITTING A MODEL USING DNN ALONE--------')       
  disp('*******************************************************************')
 addpath('CKS_MLP');
 addpath('netlab');
@@ -2987,7 +3024,7 @@ switch Datause
         cd(oldfolder);       
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, please select 1-14');
 
 end
 
@@ -3089,7 +3126,7 @@ end
 elseif bigclement==2
     
     % ENSEMBLE APPROACH
-    disp('Ensemble Mixture of Experts model -GP experts and DNN gate')
+    disp('--------Ensemble Mixture of Experts model -GP experts and DNN gate----------')
 disp('')
 disp('*******************************************************************')
 
@@ -3097,7 +3134,6 @@ disp('*******************************************************************')
 
  %%      
 disp('*******************************************************************')
-disp('BROAD OPTION OF FITTING A MODEL USING MIXTURE OF EXPERTS')
 disp(' The experts are Gp and the Gate is a DNN')
 disp('SET UP GPML TOOLBOX')
 disp ('executing gpml startup script...')
@@ -3261,7 +3297,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, please select 1-14');
 
 end
 
@@ -3282,6 +3318,9 @@ disp('1:CCR')
 disp('2:CCR-MM')
 disp('3:MM-MM')
 method=input('Enter the learning scheme desired: ');
+if method > 2
+error('Wrong choice please select 1-3')
+end
 disp('*******************************************************************')
 linecolor1 = colordg(4);
 iterra=input('Enter the number of realisations you want: ');
@@ -3291,6 +3330,9 @@ disp('1:K-means') % This throws an error sometimes
 disp('2:Random')
 
 method2=input('Enter the options for initialising inducing points: ');
+if method2 > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Rescale data and then Split dataset to Train and Test;
 Xini=X;
@@ -3323,6 +3365,9 @@ disp('1:Recommended number of Experts') % This throws an error sometimes
 disp('2:User specific')
 
 mummy=input('Enter the options for choosing number of experts: ');
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Experts options
 if mummy==1
@@ -3379,7 +3424,12 @@ disp('1:Pre-set options (As with the Paper)') % This throws an error sometimes
 disp('2:User prefered options')
 
 choicee=input('Enter the options for setting the NN classifier parameters: ');
-
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
 if choicee==1
     nnOptions = {'lambda', 0.1,...
             'maxIter', 1000,...
@@ -3617,7 +3667,7 @@ RMSEevolve=cell(iterra,1);
     for mum=1:iterra
 disp('*******************************************************************')          
 fprintf('Finished realisation %d... .\n', mum);           
-disp('CCR-MM SCHEME')
+disp('---------------------------CCR-MM SCHEME---------------------------')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -3921,7 +3971,7 @@ save('RMSEevolve.mat', 'RMSEevolve')
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+  disp('-----------------------MM-MM SCHEME-------------------------------') 
 %  parpool('cluster1',8) 
 R2evolve=cell(iterra,1); 
 L2evolve=cell(iterra,1); 
@@ -4175,7 +4225,7 @@ rmpath('CKS_Ensemble')
 rmpath(mydir) 
 
 else
- disp('2 iterations random-MM /CCR-MM')   
+ disp('---------------------2 iterations random-MM /CCR-MM-----------------')   
 
     Ultimate_clement=1;
 
@@ -4184,7 +4234,6 @@ disp('*******************************************************************')
 
  %%      
 disp('*******************************************************************')
-disp('BROAD OPTION OF FITTING A MODEL USING MIXTURE OF EXPERTS')
 disp(' The experts are Gp and the Gate is a DNN')
 disp('SET UP GPML TOOLBOX')
 disp ('executing gpml startup script...')
@@ -4348,7 +4397,7 @@ switch Datause
         cd(oldfolder);   
     otherwise
             
-        error('Data not specified correctly');
+        error('Data not specified correctly, Please select 1-14');
 
 end
 
@@ -4375,6 +4424,9 @@ disp('1:K-means') % This throws an error sometimes
 disp('2:Random')
 
 method2=input('Enter the options for initialising inducing points: ');
+if method2 > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Rescale data and then Split dataset to Train and Test;
 Xini=X;
@@ -4407,6 +4459,9 @@ disp('1:Recommended number of Experts') % This throws an error sometimes
 disp('2:User specific')
 
 mummy=input('Enter the options for choosing number of experts: ');
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
 disp('*******************************************************************')
 %% Experts options
 if mummy==1
@@ -4462,7 +4517,9 @@ disp('1:Pre-set options (As with the Paper)') % This throws an error sometimes
 disp('2:User prefered options')
 
 choicee=input('Enter the options for setting the NN classifier parameters: ');
-
+if choicee > 2
+error('Wrong choice please select 1-2')
+end
 if choicee==1
     nnOptions = {'lambda', 0.1,...
             'maxIter', 1000,...
@@ -4583,7 +4640,7 @@ disp('*******************************************************************')
 R2now=R2ccr; 
 %% Starting MM loop
  for i=1:2
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d | 2 ... .\n', i); 
 weights=weights_updated;
 if i~=1
 dd = MM_clement(weights,X_train,y_train,modelNN,Class_all,Experts); 
@@ -4736,7 +4793,7 @@ save('Valueevolution.out','valueallmm','-ascii')
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+disp('---------------------------MM-MM SCHEME----------------------------') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -4747,7 +4804,7 @@ cov = {@covSEiso};
 infv  = @(varargin) inf(varargin{:},struct('s',1.0));   
 %% Starting MM loop
  for i=1:2
-fprintf('begin iteration %d... .\n', i); 
+fprintf('iteration %d | 2... .\n', i); 
 if i==1
 
  dd = randi(Experts,size(y_train,1),1);
@@ -4912,7 +4969,7 @@ end
 disp('*******************************************************************')
 rmpath('CKS')
 rmpath(mydir)
-disp('PROGRAM EXECUTED SUCCESFULLY')
+disp('---------------------PROGRAM EXECUTED SUCCESFULLY------------------')
  
 end
-disp('OVERALL PROGRAM EXECUTED SUCCESFULLY AND FILES SAVED')     
+disp('-----OVERALL PROGRAM EXECUTED SUCCESFULLY AND FILES SAVED-----------')     
