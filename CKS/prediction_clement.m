@@ -1,4 +1,4 @@
-function [Valuee,cost]=prediction_clement(weights,dd_updated,X,y,Xtrains,ytrains,Experts)
+function [Valuee,Valuees,cost]=prediction_clement(weights,dd_updated,X,y,Xtrains,ytrains,Experts)
   labelDA =dd_updated; %target prediction
 
 	meanfunc=[];
@@ -25,8 +25,10 @@ for i=1:Experts
     [zz s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
 
 zz=reshape(zz,[],1);
-Valuee(indee,:)= zz;
+s2=reshape(s2,[],1);
 
+Valuee(indee,:)= zz;
+Valuees(indee,:)= s2;
      else
 
        Valuee(indee,:)= 0; 
