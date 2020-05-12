@@ -522,6 +522,10 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer,stdclem];
 headers = {'Hard_pred','Soft_pred','Stndev'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
+
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
@@ -760,6 +764,8 @@ save('Valueevolution.out','valueallmm','-ascii')
 Matrix=[hardanswer,softanswer,stdclem];
 headers = {'Hard_pred','Soft_pred','Stndev'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
@@ -951,6 +957,8 @@ save('Valueevolution.out','valueallmm','-ascii')
 Matrix=[hardanswer,softanswer,stdclem];
 headers = {'Hard_pred','Soft_pred','Stndev'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
@@ -1422,6 +1430,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(weights_updated,modelNN,Class_all,clfy)
@@ -1646,6 +1656,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
@@ -1823,6 +1835,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
@@ -2113,6 +2127,8 @@ fprintf(file5,'The wall clock time is %4.2f secs \n',tt);
 Matrix=[clem1];
 headers = {'Hard_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(net)
@@ -2559,6 +2575,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(weights_updated,modelNN,Class_all,clfy)
@@ -2781,6 +2799,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
@@ -2957,6 +2977,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer];
 headers = {'Hard_pred','Soft_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
@@ -3226,6 +3248,8 @@ fprintf(file5,'The wall clock time is %4.2f secs \n',tt);
 Matrix=[clem1];
 headers = {'Hard_pred'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 parsave(net)
@@ -3989,6 +4013,8 @@ cd(folder)
 save('predict_hard.out','Hardbig','-ascii')
 save('predict_soft.out','Softbig','-ascii')
 save('stdd.out','stdbig','-ascii')
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2hardtraining.out','R2hardtrainingtola','-ascii')
@@ -4255,6 +4281,8 @@ cd(folder)
 save('predict_hard.out','Hardbig','-ascii')
 save('predict_soft.out','Softbig','-ascii')
 save('stdd.out','stdbig','-ascii')
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2hardtraining.out','R2hardtrainingtola','-ascii')
@@ -4947,6 +4975,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer,stdclem];
 headers = {'Hard_pred','Soft_pred','Stadev'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
@@ -5135,6 +5165,8 @@ fprintf(file5,']\n');
 Matrix=[hardanswer,softanswer,stdclem];
 headers = {'Hard_pred','Soft_pred','Stadev'}; 
 csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
 save('R2evolution.out','R2_allmm','-ascii')
