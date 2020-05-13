@@ -1,9 +1,12 @@
-function [Valuee,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
+function [Valuee,variance2,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
 
-   [labelDA,D] = predictNN(X, modelNN); 
+   [~,D] = predictNN(X, modelNN); 
 
 numcols=size(D,2);
 Valueer=zeros(size(X,1),numcols);
+Term_1=zeros(size(X,1),numcols);
+Term_2=zeros(size(X,1),numcols);
+Term_3=zeros(size(X,1),numcols);
 	meanfunc=[];
 likfunc = {@likGauss};    
 
@@ -17,23 +20,23 @@ for i=1:Experts
     if size(Xuse,1)~= 0
     yuse=ytrains{i,:};
 	cov1 = {'apxSparse',cov,hyp_use.xu};  
-
-         
     a00=X ; 
-
-
     [zz s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
 
 zz=reshape(zz,[],1);
     else
         zz=0;
+        s2=0;
     end
 getit=D(:,i).*zz;
 Valueer(:,i)=getit;
-
+Term_1(:,i)=D(:,i).*s2;
+Term_2(:,i)=D(:,i).*(zz.^2);
+Term_3(:,i)=D(:,i).*zz;
 end
 
 Valuee=sum(Valueer,2);
+variance2=sum(Term_1,2)+(sum(Term_2,2)-(sum(Term_3,2)).^2);
 
    CCR=Valuee;
    True=y;

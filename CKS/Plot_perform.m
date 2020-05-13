@@ -1,5 +1,6 @@
-function [Valueehard,Valueesoft,ind_train,ind_test,stdclem]= Plot_perform(hardtr,softtr,hardts...
-,softts,y,method,folder,X,ind_train,ind_test,oldfolder,Datause,stdtr,stdte)
+function [Valueehard,Valueesoft,ind_train,ind_test,stdclem,stdsclem]= ...
+    Plot_perform(hardtr,softtr,hardts,softts,y,method,folder,X,ind_train,...
+    ind_test,oldfolder,Datause,stdtr,stdte,sstdtr,sstdte)
 
 Valueehard=zeros(size(X,1),1);
 Valueehard(ind_train,:)=hardtr;
@@ -14,6 +15,10 @@ Valueesoft(ind_test,:)=softts;
 stdclem=zeros(size(X,1),1);
 stdclem(ind_train,:)=stdtr;
 stdclem(ind_test,:)=stdte;
+
+stdsclem=zeros(size(X,1),1);
+stdsclem(ind_train,:)=sstdtr;
+stdsclem(ind_test,:)=sstdte;
 
 %if method= 1 || &&
 if (method==1 || 2 || 3 )  && size(X,2)==1   
