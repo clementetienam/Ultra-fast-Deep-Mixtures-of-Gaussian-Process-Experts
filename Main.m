@@ -3563,7 +3563,7 @@ disp('*******************************************************************')
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
 [Valueesoft,sstdte,costsoft]=Soft_prediction_RF(weights_updated,...
-    modelNN,X_test,y_test,Experts);
+    Mdl,X_test,y_test,Experts);
 R2hard=costhard.R2;
 R2soft=costsoft.R2;
 
