@@ -54,9 +54,10 @@ Extras
 --------------------------------------
 Extra methods are included also;
 - Running supervised learning models with DNN and MLP alone (Requires the netlab and MATLAB DNN tool box)
-- Running CCR/CCR-MM and MM-MM with DNN/DNN for the experts ad gates respectively and MLP/DNN for the experts and gates respectively (Requires netlab and MATLAB DNN toolbox)
+- Running CCR/CCR-MM and MM-MM with DNN/DNN for the experts and gates respectively and MLP/DNN for the experts and gates respectively (Requires netlab and MATLAB DNN toolbox)
 - Running the MM method for only 2 iterations using Sparse Gp experts and DNN gates
 - Running an ensemble paradigm of the CCR-MM and MM-MM to quantify total uncertainty
+- Running CCR/CCR-MM and MM-MM with RandomForest Experts and RandomForest Gates. This method is fast and also gives a measure of uncerntainty
 
 Author:
 --------------------------------
