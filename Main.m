@@ -16,6 +16,7 @@ disp('Method 2: Mixture of Experts model-MLP experts and DNN gate')
 disp('Method 3: ML model using MLP alone')
 disp('Method 4: Mixture of Experts model-DNN experts and DNN gate')
 disp('Method 5: ML model using DNN alone')
+disp('Method 6: Mixture of Experts model -RF experts and RF gate')
 disp('')
 disp('*******************************************************************')
 %%
@@ -25,7 +26,7 @@ disp('3= 2 iterations approach for machine-MM2r')
 bigclement=input('Enter the option as stated above: ');
 disp('*******************************************************************')
 %%
-if bigclement==1
+if bigclement==1 % This is the broader schemes
 disp('1=Reproduce results in paper using Gp experts and DNN gate')
 disp('2=Try other combinations of experts and Gates')
 Ultimate_Kody=input('Enter the option as stated above: ');
@@ -42,8 +43,9 @@ disp('2=Mixture of experts with MLP experts and DNN gate')
 disp('3=Machine learning model using MLP alone')
 disp('4=Mixture of experts with DNN experts and DNN gate')
 disp('5=Machine learning model using DNN alone')
+disp('6=Mixture of experts with RF experts and RF gate')
 Ultimate_clement=input('Enter the combinations of experts and Gates desired: ');
-if (Ultimate_clement > 5) || (Ultimate_clement < 2)
+if (Ultimate_clement > 6) || (Ultimate_clement < 2)
 error('Wrong choice please select 2-5')
 end
 disp('*******************************************************************')
@@ -264,7 +266,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.1;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -462,6 +464,9 @@ R2softt=costsoftt.R2;
 disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
+
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
@@ -480,7 +485,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
 folder = 'Results_CCR';
 mkdir(folder);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
@@ -705,6 +711,8 @@ disp('*******************************************************************')
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
 [dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
@@ -723,7 +731,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -905,6 +914,8 @@ R2softt=costsoftt.R2;
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
@@ -920,6 +931,8 @@ R2soft=costsoft.R2;
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -1161,7 +1174,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -2024,7 +2037,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -2310,7 +2323,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -3147,7 +3160,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -3216,7 +3229,852 @@ rmpath('CKS_MLP')
 rmpath('netlab')
 rmpath('data')
     otherwise
- disp('METHOD NOT SPECIFIED CORRECTLY')         
+disp('-----------BROAD OPTION OF FITTING A MODEL USING RF EXPERT AND RF GATE--------')       
+ disp('*******************************************************************')
+addpath('RFS');
+addpath('data');
+paroptions = statset('UseParallel',true);
+oldfolder=cd;
+%% Select the Data to use
+disp('*******************************************************************')
+disp('CHOOSE THE DATASET')
+disp('')
+disp('1=NASA data')
+disp('2=Motorcycle data')
+disp('3=Hingdom data')
+disp('4=FODS 1 data')
+disp('5=FODS 2 data')
+disp('6=FODS 3 data')
+disp('7=FODS 4 data')
+disp('8=FODS 5 data')
+disp('9=FODS 6 data')
+disp('10=FODS 7 data')
+disp('11=Tauth data')
+disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
+disp('13=Mixture model 1 data')
+disp('14=Mixture model 2 data')
+Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+switch Datause
+    case 1
+        cd('data/Nasa')
+        load ('nasadata.txt');
+        aa=nasadata;
+        X=aa(:,1:3);
+        y=aa(:,4);
+        cd(oldfolder)
+    case 2
+        cd('data/Motorcycle')
+        load motorcycle;
+        X=x;
+        cd(oldfolder)
+    case 3
+        X = unifrnd(0,20,1000,1);
+        for i=1:size(X,1)
+            x=X(i,:);
+            if (x < 10)
+            aa = sin(pi*x/5) + 0.2*cos(4*pi*x/5);
+            else
+            aa = x/10 - 1;
+            end
+            y(i,:) = aa;
+        end
+        r = normrnd(0,0.1^2,1000,1);
+        y=y+r; %corrrupt with noise
+        cd('data/Hingdom')
+        file3 = fopen('inputt.out','w+'); 
+        for k=1:numel(X)                                                                       
+        fprintf(file3,' %4.8f \n',X(k) );             
+        end
+
+        file4 = fopen('outputt.out','w+'); 
+        for k=1:numel(y)                                                                       
+        fprintf(file4,' %4.6f \n',y(k) );             
+        end
+        cd(oldfolder)
+    case 4
+        X=linspace(0,2,1000);
+        X=X';
+        y=X.*(X>=1);
+        cd('data/FODS_1')
+        file3 = fopen('inputt.out','w+'); 
+        for k=1:numel(X)                                                                       
+        fprintf(file3,' %4.8f \n',X(k) );             
+        end
+
+        file4 = fopen('outputt.out','w+'); 
+        for k=1:numel(y)                                                                       
+        fprintf(file4,' %4.6f \n',y(k) );             
+        end
+        cd(oldfolder)
+        
+    case 5
+        cd('data/FODS_2')
+        load inputtestactive.out;
+        load outputtestactive.out;
+        X=inputtestactive;
+        y=outputtestactive;
+        cd(oldfolder)
+    case 6
+        cd('data/FODS_3')
+        load inpiecewise.out;
+        load outpiecewise.out;
+
+        X=inpiecewise;
+        y=outpiecewise;
+        cd(oldfolder)
+    case 7
+        cd('data/FODS_4')
+        load inputt.out;
+
+        X=inputt(:,1);
+        y=inputt(:,2);
+        cd(oldfolder)
+    case 8
+        cd('data/FODS_5')
+        load inpiecewise2.out;
+        load outpiecewise2.out;
+
+        X=reshape(inpiecewise2,[],2);
+        y=outpiecewise2;
+        cd(oldfolder);
+    case 9
+        cd('data/FODS_6')
+        load inputt.out;
+        load outputt.out;
+
+        X=reshape(inputt,[],2);
+        y=outputt;
+        cd(oldfolder)
+    case 10
+        cd('data/FODS_7')
+        load chi_itg.dat;
+        X=chi_itg(:,1:10);
+        y=chi_itg(:,11);
+        cd(oldfolder)   
+    case 11
+
+      cd('data/Tauth')
+      load JM_tauth_data;
+
+      X=[a0,b0,delta,ip,kappa,nebar,ploss,r0,zeff];
+      y=[tauth];
+      cd(oldfolder)
+    case 12
+        X=linspace(-10,10,1000);
+        a=X;
+        y=sinc(a);
+        sdd=(0.05+0.21*(1+sin(2.*a)))./(1+exp(-0.2.*a));
+        error=normrnd(0,sdd,1,1000);
+        y=y+error;
+        X=X';
+        y=y';
+   case 13
+        cd('data/Mixture_model_1')
+        load inn1.out;
+        load out1.out;
+
+        X=inn1;
+        y=out1;
+        cd(oldfolder);  
+  case 14
+        cd('data/Mixture_model_2')
+        load inn2.out;
+        load out2.out;
+
+        X=inn2;
+        y=out2;
+        cd(oldfolder);       
+    otherwise
+            
+        error('Data not specified correctly, please select 1-14');
+
+end
+file55 = fopen('Data_Summary.out','w+');    
+    [a,b]=size(X);
+    c=size(y,1);
+
+   fprintf(file55,'The number of datapoints of inputs is : %d \n',a);
+   fprintf(file55,'The number of features of inputs is : %d \n',b);
+   fprintf(file55,'The number of datapoints of outputs is : %d \n',c);
+%% Options for Training
+
+disp('*******************************************************************')
+%% Split dataset to Train and Test;    
+Xini=X;
+yini=y;
+  
+clfx = MinMaxScaler();
+(clfx.fit(X));
+X=(clfx.transform(X));
+
+clfy = MinMaxScalery();
+(clfy.fit(y));
+y=(clfy.transform(y));
+disp('*******************************************************************')
+% Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
+Test_percentage=0.2;
+disp('')
+[X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
+    (X,y,Test_percentage);
+%%
+disp('SELECT OPTION FOR EXPERTS')
+disp('1:Recommended number of Experts') % This throws an error sometimes
+disp('2:User specific')
+
+mummy=input('Enter the options for choosing number of experts: ');
+
+if mummy > 2
+error('Wrong choice please select 1-2')
+end
+disp('*******************************************************************')
+%% Experts options
+if mummy==1
+    if Datause==1
+        Experts=6;
+    elseif Datause ==2
+        Experts=7;
+    elseif Datause ==3
+    Experts=3;
+    elseif Datause ==4
+    Experts=2; 
+    elseif Datause ==5
+    Experts=4;
+     elseif Datause ==6
+    Experts=3; 
+    elseif Datause ==7
+    Experts=3;  
+    elseif Datause ==8
+    Experts=13; 
+    elseif Datause ==9
+    Experts=6; 
+    elseif Datause ==10
+    Experts=8; 
+    elseif Datause ==11
+    Experts=9; 
+    elseif Datause ==12
+    Experts=4;
+    elseif Datause ==13
+    Experts=3;     
+else
+    Experts=3;
+end
+else
+disp('*******************************************************************')
+disp('SELECT OPTION FOR THE EXPERTS')
+Experts=input('Enter the maximum number of experts required: ');
+
+if size (X_train,1)==1
+    inflate=2;
+else
+    inflate=1;
+
+end
+Data=[X_train size(X_train,2)*(y_train)*inflate];
+[IDX,C,SUMD,Kk]=kmeans_opt(Data,20); %Elbow method
+Experts=min(Experts,Kk);
+end
+fprintf('The Expert that will be used is : %d \n',Experts);
+disp('*******************************************************************')
+%% Start Simuations for CCR,CCR-MM and MM-MM
+oldfolder=cd;
+cd(oldfolder) % setting original directory
+disp('*******************************************************************')
+disp('SELECT OPTION FOR TRAINING THE MODEL')
+disp('1:CCR')
+disp('2:CCR-MM')
+disp('3:MM-MM')
+method=input('Enter the learning scheme desired: ');
+if method > 3
+error('Wrong choice please select 1-3')
+end
+save('Method.out','method','-ascii')  
+if method==1
+disp('*******************************************************************')    
+disp('CCR SCHEME') 
+tic;
+if size (X_train,1)==1
+    inflate=2;
+else
+    inflate=1;
+
+end
+disp('*******************************************************************')
+disp('DO CLUSTERING STEP')
+Data=[X_train size(X_train,2)*(y_train)*inflate];
+% gm = fitgmdist(Data,Experts); This can be used with Gaussian Mixture
+% idx = cluster(gm,Data);
+idx = kmeans(Data,Experts,'MaxIter',500);
+dd=idx; 
+disp('*******************************************************************')
+disp('DO CLASSIFICATION STEP')
+Mdl = TreeBagger(500,X_train,dd,'Method','c','Options',paroptions);
+dd = str2double(predict(Mdl,X_train));
+Class_all=cell(Experts,1);
+%% 
+
+for i=1:Experts
+    Classe=find(dd==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('DO REGRESSION STEP')
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor i=1:Experts
+ fprintf('Starting Expert %d... .\n', i);     
+ Classe= Class_all{i,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{i,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', i);     
+end
+
+tt=toc;
+%% Prediction on Training data Training accuracy);
+dd_tola = str2double(predict(Mdl,X_train));
+disp('predict Hard Prediction on training data')
+disp('*******************************************************************')
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
+    X_train,y_train,Experts);
+disp('predict Soft Prediction on training data')
+disp('*******************************************************************')
+[Valueesoftt,sstdtr,costsoftt]=Soft_prediction_RF(weights_updated,...
+    Mdl,X_train,y_train,Experts);
+R2hardt=costhardt.R2;
+R2softt=costsoftt.R2;
+
+disp('*******************************************************************')
+hardtr=clfy.inverse_transform(Valueehardtr);
+softtr=clfy.inverse_transform(Valueesoftt);
+
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
+%% Prediction on Test data (Test accuracy)
+dd_tola = str2double(predict(Mdl,X_test)); % Predicts the Labels 
+disp('predict Hard Prediction on test data')
+disp('*******************************************************************')
+
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+    y_test,Experts);
+disp('predict Soft Prediction on test data')
+disp('*******************************************************************')
+[Valueesoft,sstdte,costsoft]=Soft_prediction_RF(weights_updated,...
+    modelNN,X_test,y_test,Experts);
+R2hard=costhard.R2;
+R2soft=costsoft.R2;
+
+disp('*******************************************************************')
+disp(' Rescale back the predictions and save to file')
+hardts=clfy.inverse_transform(Valueehard);
+softts=clfy.inverse_transform(Valueesoft);
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
+
+
+folder='Results_CCR';
+mkdir(folder);
+[hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
+    (hardtr,softtr,hardts,softts,yini,...
+    method,folder,Xini,ind_train,ind_test,oldfolder,...
+    Datause,stdtr,stdte,sstdtr,sstdte);
+
+fprintf('The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf('The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf('The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf('The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf('The wall clock time is %4.2f secs \n',tt);  
+fprintf('The number of experts used is %d \n',Experts); 
+
+copyfile('Data_Summary.out',folder)
+cd(folder)
+file5 = fopen('Summary.out','w+'); 
+fprintf(file5,'The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf(file5,'The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf(file5,'The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf(file5,'The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf(file5,'The wall clock time is %4.2f secs \n',tt); 
+fprintf(file5,'The number of experts used is %d \n',Experts); 
+
+
+Matrix=[hardanswer,softanswer,stdclem,stdsclem];
+headers = {'Hard_pred','Soft_pred','Hard_std','Soft_std'}; 
+csvwrite_with_headers('output_answer.csv',Matrix,headers);
+
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
+
+save('Train_indices.out','ind_train','-ascii')
+save('Test_indices.out','ind_test','-ascii')
+save('combo.out','Ultimate_clement','-ascii')
+save('Experts.out','Experts','-ascii')
+save('Method.out','method','-ascii')
+parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+cd(oldfolder)
+
+elseif method==2
+disp('CCR-MM SCHEME')
+disp('*******************************************************************')
+tic;
+if size (X_train,1)==1
+    inflate=2;
+else
+    inflate=1;
+
+end
+Data=[X_train size(X_train,2)*(y_train)*inflate];
+% gm = fitgmdist(Data,Experts); This can be used with Gaussian Mixture
+% idx = cluster(gm,Data);
+disp('*******************************************************************')
+disp('DO CLUSTERING STEP')
+
+
+
+idx = kmeans(Data,Experts,'MaxIter',500);
+
+dd=idx; 
+disp('*******************************************************************')
+disp('DO CLASSIFICATION STEP')
+Mdl = TreeBagger(500,X_train,dd,'Method','c','Options',paroptions);
+dd = str2double(predict(Mdl,X_train));
+Class_all=cell(Experts,1);
+%% 
+for i=1:Experts
+    Classe=find(dd==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+
+% a=cell(10,1); % You can initialise a cell this way also
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor i=1:Experts
+ fprintf('Starting Expert %d... .\n', i);     
+ Classe= Class_all{i,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{i,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', i);     
+end
+disp('optimise classifier')
+disp('*******************************************************************')
+
+% [modelNN,updated_classtheta] = learnNN(X_train, dd, nrOfLabels,input_layer_size,...
+%                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
+dd= str2double(predict(Mdl,X_train)); % Predicts the Labels              
+[Valuee1,std1,cost3]=prediction_RF(weights_updated,dd,X_train,y_train,...
+    Experts);
+    R2ccr=cost3.R2;
+    L2ccr=cost3.L2;
+   RMSEccr=cost3.RMSE;
+fprintf('The R2 accuracy for 1 pass CCR is %4.2f \n',R2ccr)
+fprintf('The L2 accuracy for 1 pass CCR is %4.2f \n',L2ccr)
+fprintf('The root mean squared error for 1 pass CCR is %4.2f \n',RMSEccr)
+disp('*******************************************************************')
+R2now=R2ccr; 
+%% Starting MM loop
+ for i=1:Inf
+fprintf('iteration %d... .\n', i); 
+weights=weights_updated;
+if i~=1
+dd = MM_RF(weights,X_train,y_train,Mdl,Class_all,Experts); 
+end
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{ik,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end
+           
+dd_updated = MM_RF(weights_updated,X_train,y_train,Mdl,Class_all,Experts);
+Mdl = TreeBagger(500,X_train,dd_updated,'Method','c','Options',paroptions);              
+ [Valuee,~,cost2]=prediction_RF(weights_updated,dd_updated,X_train,...
+     y_train,Experts);
+    R2=cost2.R2;
+    L2=cost2.L2;
+   RMSE=cost2.RMSE;
+disp('*******************************************************************')   
+R2_allmm(i,:)=R2;
+L2_allmm(i,:)=L2;
+RMSE_allmm(i,:)=RMSE;
+valueallmm(:,i)=Valuee;
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
+if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+   break;
+end
+R2now=R2;     
+ end
+ %%
+Class_all=cell(Experts,1);
+%% 
+
+for i=1:Experts
+    Classe=find(dd_updated==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+% a=cell(10,1); % You can initialise a cell this way also
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ij=1:Experts
+ fprintf('Starting Expert %d... .\n', ij);     
+ Classe= Class_all{ij,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{ij,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', ij);    
+end 
+ %%
+oldfolder=cd;
+cd(oldfolder) % setting original directory
+%folder = strcat('Results_CCR_MM', sprintf('%.3d',jjm));
+folder='Results_CCR_MM';
+mkdir(folder);
+tt=toc;
+geh=[RMSEccr; RMSE_allmm];
+iterr=size(geh,1);
+xx=1:iterr;
+figure()
+subplot(2,2,1)
+plot(xx,[RMSEccr; RMSE_allmm],'r','LineWidth',1)
+xlim([1 iterr])
+ylabel('RMSE') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('CCR-MM','location','northeast');
+
+subplot(2,2,2)
+plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
+xlim([1 iterr])
+ylabel('R2 accuracy in %') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('CCR-MM','location','northeast');
+
+subplot(2,2,3)
+plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
+
+xlim([1 iterr])
+ylabel('L2 accuracy in %') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('CCR-MM','location','northeast');
+cd(folder)
+saveas(gcf,'performance_a.fig')
+cd(oldfolder)
+%% Prediction on Training data Training accuracy);
+dd_tola= str2double(predict(Mdl,X_train));
+disp('predict Hard Prediction on training data')
+disp('*******************************************************************')
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_updated,...
+    X_train,y_train,Experts);
+disp('predict Soft Prediction on training data')
+disp('*******************************************************************')
+[Valueesoftt,sstdtr,costsoftt]=Soft_prediction_RF(weights_updated,...
+    Mdl,X_train,y_train,Experts);
+R2hardt=costhardt.R2;
+R2softt=costsoftt.R2;
+disp('*******************************************************************')
+
+hardtr=clfy.inverse_transform(Valueehardtr);
+softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
+%% Prediction on Test data (Test accuracy)
+
+dd_tola= str2double(predict(Mdl,X_test));
+disp('predict Hard Prediction on test')
+disp('*******************************************************************')
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+    y_test,Experts);
+disp('predict Soft Prediction on test')
+disp('*******************************************************************')
+[Valueesoft,sstdte,costsoft]=Soft_prediction_RF(weights_updated,...
+    Mdl,X_test,y_test,Experts);
+R2hard=costhard.R2;
+R2soft=costsoft.R2;
+
+disp('*******************************************************************')
+disp(' Rescale back the predictions and save to file')
+hardts=clfy.inverse_transform(Valueehard);
+softts=clfy.inverse_transform(Valueesoft);
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
+[hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
+    (hardtr,softtr,hardts,softts,yini,...
+    method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
+    sstdtr,sstdte);
+
+fprintf('The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf('The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf('The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf('The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf('The wall clock time is %4.2f secs \n',tt);  
+fprintf('The number of experts used is %d \n',Experts); 
+
+
+copyfile('Data_Summary.out',folder)
+cd(folder)
+file5 = fopen('Summary.out','w+'); 
+fprintf(file5,'The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf(file5,'The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf(file5,'The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf(file5,'The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf(file5,'The wall clock time is %4.2f secs \n',tt); 
+fprintf(file5,'The number of experts used is %d \n',Experts); 
+
+save('R2evolution.out','R2_allmm','-ascii')
+save('L2evolution.out','L2_allmm','-ascii')
+save('RMSEevolution.out','RMSE_allmm','-ascii')
+save('Valueevolution.out','valueallmm','-ascii')
+Matrix=[hardanswer,softanswer,stdclem,stdsclem];
+headers = {'Hard_pred','Soft_pred','Hard_std','Soft_std'}; 
+csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
+save('Train_indices.out','ind_train','-ascii')
+save('Test_indices.out','ind_test','-ascii')
+save('combo.out','Ultimate_clement','-ascii')
+save('Experts.out','Experts','-ascii')
+save('Method.out','method','-ascii')
+parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+cd(oldfolder)
+else
+disp('*******************************************************************')    
+  disp('MM-MM SCHEME') 
+%  parpool('cluster1',8) 
+tic;
+ R2now=0; 
+%% Starting MM loop
+ for i=1:Inf
+fprintf('iteration %d... .\n', i); 
+if i==1
+
+ dd = randi(Experts,size(y_train,1),1);
+ disp('Initialised randomly for the first time')
+else
+weights=weights_updated;
+dd = MM_RF(weights,X_train,y_train,Mdl,Class_all,Experts);
+disp('initialised using MM scheme')
+end
+
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+
+parfor il=1:Experts
+ fprintf('Starting Expert %d... .\n', il);     
+ Classe= Class_all{il,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{il,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', il);    
+end
+
+if i==1
+[Valueeini,~,costini]=prediction_RF(weights_updated,dd,X_train,y_train,...
+    Experts);
+fprintf('R2 initial accuracy for random initialisation is %4.4f... .\n', costini.R2);   
+end
+
+if i==1
+dd_updated=dd;
+else
+dd_updated = MM_RF(weights_updated,X_train,y_train,Mdl,Class_all,Experts);
+end
+
+Mdl = TreeBagger(500,X_train,dd_updated,'Method','c','Options',paroptions);   
+ [Valuee,~,cost2]=prediction_RF(weights_updated,dd_updated,X_train,...
+     y_train,Experts);
+    R2=cost2.R2;
+    L2=cost2.L2;
+   RMSE=cost2.RMSE;
+R2_allmm(i,:)=R2;
+L2_allmm(i,:)=L2;
+RMSE_allmm(i,:)=RMSE;
+valueallmm(:,i)=Valuee;
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
+%if i>=2
+if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+   break;
+end
+%end
+R2now=R2;
+    fprintf('Finished iteration %d... .\n', i);          
+ end
+ %%
+ Class_all=cell(Experts,1);
+%% 
+for i=1:Experts
+    Classe=find(dd_updated==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+% a=cell(10,1); % You can initialise a cell this way also
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ij=1:Experts
+ fprintf('Starting Expert %d... .\n', ij);     
+ Classe= Class_all{ij,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_RF(X_train,y_train,Classe);
+ weights_updated{ij,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', ij);    
+end
+
+%%           
+oldfolder=cd;
+cd(oldfolder) % setting original directory
+%folder = strcat('Results__MM_MM', sprintf('%.3d',jjm));
+folder='Results__MM_MM';
+mkdir(folder);
+tt=toc;
+geh=[RMSE_allmm];
+iterr=size(geh,1);
+xx=1:iterr;
+figure()
+subplot(2,2,1)
+plot(xx,[RMSE_allmm],'r','LineWidth',1)
+xlim([1 iterr])
+ylabel('RMSE') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('MM-MM','location','northeast');
+
+subplot(2,2,2)
+plot(xx,[R2_allmm],'r','LineWidth',1)
+xlim([1 iterr])
+ylabel('R2 accuracy in %') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('MM-MM','location','northeast');
+
+subplot(2,2,3)
+plot(xx,[L2_allmm],'r','LineWidth',1)
+
+xlim([1 iterr])
+ylabel('L2 accuracy in %') 
+xlabel('iterations') 
+set(gca, 'FontName','Helvetica', 'Fontsize', 13)
+set(gcf,'color','white')
+legend('MM-MM','location','northeast');
+cd(folder)
+saveas(gcf,'performance_a.fig')
+cd(oldfolder)
+%% Prediction on Training data Training accuracy);
+
+dd_tola= str2double(predict(Mdl,X_train));
+disp('predict Hard Prediction on training data')
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_updated,...
+    X_train,y_train,Experts);
+disp('predict Soft Prediction on training data')
+[Valueesoftt,sstdtr,costsoftt]=Soft_prediction_RF(weights_updated,...
+    Mdl,X_train,y_train,Experts);
+R2hardt=costhardt.R2;
+R2softt=costsoftt.R2;
+
+hardtr=clfy.inverse_transform(Valueehardtr);
+softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
+%% Prediction on Test data (Test accuracy)
+%[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_tola]= str2double(predict(Mdl,X_test));
+disp('predict Hard Prediction on test data')
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+    y_test,Experts);
+disp('predict Soft Prediction on test data')
+disp('*******************************************************************')
+[Valueesoft,sstdte,costsoft]=Soft_prediction_RF(weights_updated,...
+    Mdl,X_test,y_test,Experts);
+R2hard=costhard.R2;
+R2soft=costsoft.R2;
+
+disp(' Rescale back the predictions and save to file')
+hardts=clfy.inverse_transform(Valueehard);
+softts=clfy.inverse_transform(Valueesoft);
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
+[hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
+    (hardtr,softtr,hardts,softts,yini,...
+    method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
+    sstdtr,sstdte);
+fprintf('The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf('The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf('The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf('The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf('The wall clock time is %4.2f secs \n',tt);  
+fprintf('The number of experts used is %d \n',Experts); 
+
+copyfile('Data_Summary.out',folder)
+cd(folder)
+file5 = fopen('Summary.out','w+'); 
+fprintf(file5,'The R2 accuracy for hard prediction on (training data) is %4.2f \n',R2hardt); 
+fprintf(file5,'The R2 accuracy for soft prediction on (training data) is %4.2f \n',R2softt); 
+fprintf(file5,'The R2 accuracy for hard prediction on (test data) is %4.2f \n',R2hard); 
+fprintf(file5,'The R2 accuracy for soft prediction on (test data) is %4.2f \n',R2soft); 
+fprintf(file5,'The wall clock time is %4.2f secs \n',tt); 
+fprintf(file5,'The number of experts used is %d \n',Experts); 
+save('R2evolution.out','R2_allmm','-ascii')
+save('L2evolution.out','L2_allmm','-ascii')
+save('RMSEevolution.out','RMSE_allmm','-ascii')
+save('Valueevolution.out','valueallmm','-ascii')
+Matrix=[hardanswer,softanswer,stdclem,stdsclem];
+headers = {'Hard_pred','Soft_pred','Hard_std','Soft_std'}; 
+csvwrite_with_headers('output_answer.csv',Matrix,headers);
+ind_train=reshape(ind_train,[],1);
+ind_test=reshape(ind_test,[],1);
+save('Train_indices.out','ind_train','-ascii')
+save('Test_indices.out','ind_test','-ascii')
+save('combo.out','Ultimate_clement','-ascii')
+save('Experts.out','Experts','-ascii')
+save('Method.out','method','-ascii')
+parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+cd(oldfolder)     
+end   
+ 
+disp('*******************************************************************')
+rmpath('RFS')
+rmpath('data')
+ 
 end
 elseif bigclement==2
     
@@ -3442,7 +4300,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -4568,7 +5426,7 @@ clfy = MinMaxScalery();
 y=(clfy.transform(y));
 disp('*******************************************************************')
 % Test_percentage=input('Enter the fraction of test data (in decimals) required (0.1-0.3): ');
-Test_percentage=0.4;
+Test_percentage=0.2;
 disp('')
 [X_train, X_test, y_train, y_test,ind_train,ind_test] = train_test_split...
     (X,y,Test_percentage);
@@ -4867,6 +5725,8 @@ disp('*******************************************************************')
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
 [dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
@@ -4885,7 +5745,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform(hardtr,...
     softtr,hardts,softts,...
     yini,method,folder,Xini,ind_train,ind_test,oldfolder,Datause,...
@@ -5061,6 +5922,8 @@ R2softt=costsoftt.R2;
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
+stdtr=clfy.inverse_transform(stdtr);
+sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
@@ -5076,7 +5939,8 @@ R2soft=costsoft.R2;
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-
+stdte=clfy.inverse_transform(stdte);
+sstdte=clfy.inverse_transform(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform(hardtr,...
     softtr,hardts,softts,...
     yini,method,folder,Xini,ind_train,ind_test,oldfolder,Datause,...
