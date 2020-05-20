@@ -36,7 +36,7 @@ MIN=min(X); MAX=max(X);
 X=(X-MIN)./(MAX-MIN);
 D=zeros(ToTest,1); %initialize the results matrix
 for c=1:ToTest %for each sample
-    [~,~,dist]=kmeans(X,c,'emptyaction','drop','MaxIter',1000); %compute the sum of intra-cluster distances
+    [~,~,dist]=kmeans(X,c,'emptyaction','drop','MaxIter',500); %compute the sum of intra-cluster distances
     tmp=sum(dist); %best so far
     
     for cc=2:Repeats %repeat the algo
