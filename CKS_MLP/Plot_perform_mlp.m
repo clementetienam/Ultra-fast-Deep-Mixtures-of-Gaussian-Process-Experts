@@ -3,7 +3,12 @@ function [Valueehard]= Plot_perform_mlp(hardtr,hardts,y,folder,X,ind_train,ind_t
 Valueehard=zeros(size(X,1),1);
 Valueehard(ind_train,:)=hardtr;
 Valueehard(ind_test,:)=hardts;
-
+CCR=Valueehard;
+True=y;
+yesup=sum((abs(CCR-True)).^2);
+yesdown=sum((True-mean(True,1)).^2);
+R2h=1-(yesup/yesdown);
+R2h=R2h*100;
 if size(X,2)==1   
 figure()
 subplot(2,3,1)
@@ -21,13 +26,22 @@ set(gcf,'color','white')
 h = legend('True y','Machine');set(h,'FontSize',10);
 
 subplot(2,3,2)
-scatter(Valueehard,y,'o');
+line(Valueehard,y,'Tag','Data','MarkerFaceColor',[1 0 0],...
+    'MarkerEdgeColor',[1 0 0],...
+    'Marker','o',...
+    'LineStyle','none',...
+    'Color',[0 0 1]);
+title('(b)-Machine Reconstruction(Hard-prediction)','FontName','Helvetica', 'Fontsize', 10);
 shading flat
 grid off
-title('(b)-Machine Reconstruction(Hard-prediction)','FontName','Helvetica', 'Fontsize', 10);
-ylabel('Machine', 'FontName','Helvetica', 'Fontsize', 10);
-xlabel('True', 'FontName','Helvetica', 'Fontsize', 10);
 colormap('jet')
+xlabel('Machine','FontSize',10,'FontName','Helvetica');
+ylabel('True','FontSize',10,'FontName','Helvetica');     
+line([min([Valueehard,y]),max([Valueehard,y])],[min([Valueehard,y]),max([Valueehard,y])],'Tag','Reference Ends','LineWidth',3,'color','black');
+str=['R2 = ',num2str(R2h)];
+T = text(min(get(gca, 'xlim')), max(get(gca, 'ylim')), str); 
+set(T, 'fontsize', 10, 'verticalalignment', 'top', 'horizontalalignment', 'left');
+
 set(gca, 'FontName','Helvetica', 'Fontsize', 10)
 set(gcf,'color','white')
 
@@ -52,13 +66,22 @@ if (size(X,2)>=2)
     
 figure()
 subplot(2,2,1)
-scatter(Valueehard,y,'o');
+line(Valueehard,y,'Tag','Data','MarkerFaceColor',[1 0 0],...
+    'MarkerEdgeColor',[1 0 0],...
+    'Marker','o',...
+    'LineStyle','none',...
+    'Color',[0 0 1]);
+title('(a)-Machine Reconstruction(Hard-prediction)','FontName','Helvetica', 'Fontsize', 10);
 shading flat
 grid off
-title('(a)-Machine Reconstruction(Hard-prediction)','FontName','Helvetica', 'Fontsize', 10);
-ylabel('Machine', 'FontName','Helvetica', 'Fontsize', 10);
-xlabel('True', 'FontName','Helvetica', 'Fontsize', 10);
 colormap('jet')
+xlabel('Machine','FontSize',10,'FontName','Helvetica');
+ylabel('True','FontSize',10,'FontName','Helvetica');     
+line([min([Valueehard,y]),max([Valueehard,y])],[min([Valueehard,y]),max([Valueehard,y])],'Tag','Reference Ends','LineWidth',3,'color','black');
+str=['R2 = ',num2str(R2h)];
+T = text(min(get(gca, 'xlim')), max(get(gca, 'ylim')), str); 
+set(T, 'fontsize', 10, 'verticalalignment', 'top', 'horizontalalignment', 'left');
+
 set(gca, 'FontName','Helvetica', 'Fontsize', 10)
 set(gcf,'color','white')
 
