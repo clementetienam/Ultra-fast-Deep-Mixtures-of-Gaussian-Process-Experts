@@ -3,8 +3,9 @@ function [Valuee,cost]=prediction_clement_dnn_2(weights,dd_updated,X,y,Class_all
 
 for i=1:Experts
     Classe= Class_all{i,1}; 
- if size(Classe,1)~= 0 
-        indee=find(labelDA==i);
+	indee=find(labelDA==i)
+ if size(indee,1)~= 0 
+
    
     net=weights{i,:};
  
