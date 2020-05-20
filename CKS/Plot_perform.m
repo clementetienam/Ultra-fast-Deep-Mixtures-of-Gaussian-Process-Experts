@@ -126,13 +126,13 @@ set(gcf,'color','white')
 subplot(3,3,7)
 Train_indices=ind_train';
 Test_indices=ind_test';
-if Datause==2
+
 hard=Valueesoft;
 usee=abs(stdsclem);
-else
- hard=Valueehard;
-usee=abs(stdclem);   
-end
+
+%  hard=Valueehard;
+% usee=abs(stdclem);   
+
 error=sqrt(usee);
 x=X;
 f = [hard+2*error; flipdim(hard-2*error,1)];
@@ -146,10 +146,37 @@ plot(x,y,'.','color','r');
 colormap('jet')
 set(gca, 'FontName','Helvetica', 'Fontsize', 10)
 set(gcf,'color','white')
-title('(g)-Uncertainty','FontName','Helvetica', 'Fontsize', 20);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 20);
-ylabel('Estimate', 'FontName','Helvetica', 'Fontsize', 20);
-xlabel('X', 'FontName','Helvetica', 'Fontsize', 20);
-h = legend('Uncertainty','Train points','Test points','True,y');set(h,'FontSize',10);
+title('(g)-Hard-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
+ylabel('Estimate', 'FontName','Helvetica', 'Fontsize', 10);
+xlabel('X', 'FontName','Helvetica', 'Fontsize', 10);
+h = legend('UQ','Train points','Test points','True,y');set(h,'FontSize',10);
+
+
+subplot(3,3,8)
+Train_indices=ind_train';
+Test_indices=ind_test';
+
+ hard=Valueehard;
+usee=abs(stdclem);   
+
+error=sqrt(usee);
+x=X;
+f = [hard+2*error; flipdim(hard-2*error,1)];
+fill([x; flipdim(x,1)], f, [7 7 7]/8)
+hold on; 
+plot(x(Train_indices),hard(Train_indices),'+','color','k');
+hold on
+plot(x(Test_indices),hard(Test_indices),'+','color','b');
+hold on
+plot(x,y,'.','color','r');
+colormap('jet')
+set(gca, 'FontName','Helvetica', 'Fontsize', 10)
+set(gcf,'color','white')
+title('(h)-Soft-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
+ylabel('Estimate', 'FontName','Helvetica', 'Fontsize', 10);
+xlabel('X', 'FontName','Helvetica', 'Fontsize', 10);
+h = legend('UQ','Train points','Test points','True,y');set(h,'FontSize',10);
+
 cd(folder)
 saveas(gcf,'performance.fig')
 cd(oldfolder)
