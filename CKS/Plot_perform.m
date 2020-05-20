@@ -146,7 +146,7 @@ plot(x,y,'.','color','r');
 colormap('jet')
 set(gca, 'FontName','Helvetica', 'Fontsize', 10)
 set(gcf,'color','white')
-title('(g)-Hard-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
+title('(g)-Soft-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
 ylabel('Estimate', 'FontName','Helvetica', 'Fontsize', 10);
 xlabel('X', 'FontName','Helvetica', 'Fontsize', 10);
 h = legend('UQ','Train points','Test points','True,y');set(h,'FontSize',10);
@@ -172,7 +172,7 @@ plot(x,y,'.','color','r');
 colormap('jet')
 set(gca, 'FontName','Helvetica', 'Fontsize', 10)
 set(gcf,'color','white')
-title('(h)-Soft-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
+title('(h)-Hard-uncertainty','FontName','Helvetica', 'Fontsize', 10);ylabel('Y', 'FontName','Helvetica', 'Fontsize', 10);
 ylabel('Estimate', 'FontName','Helvetica', 'Fontsize', 10);
 xlabel('X', 'FontName','Helvetica', 'Fontsize', 10);
 h = legend('UQ','Train points','Test points','True,y');set(h,'FontSize',10);
