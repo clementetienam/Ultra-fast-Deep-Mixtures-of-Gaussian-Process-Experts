@@ -33,23 +33,26 @@ end
 [p,D] = predictNN(X, modelNN); 
 
 
- First_term=-(log(D));
- for i=1:Experts
- second_term(:,i)= 0.5*log((outputS(:,i)));
- end
+First_term=-(log(D));
+for i=1:Experts
+second_term(:,i)= 0.5*log((outputS(:,i)));
+end
 % 
- for i=1:Experts
-  under=1/(2.*outputS(:,i));
- third_term(:,i)= under*((y-outputtR(:,i)).^2);
- end
+for i=1:Experts
+a=(y-outputtR(:,i)).^2;
+b=2.*outputS(:,i);
+c=sqrt(outputS(:,i)).*sqrt(2*pi);
+c=1./c;
+third_term(:,i)=c.*log((a./b)) ;
+end
 % 
  Alll= First_term+second_term+third_term;
 
-%for i=1:Experts
-
-%thirds_term(:,i)= ((y-outputtR(:,i)).^2);
-
-%end
+% for i=1:Experts
+% 
+% thirds_term(:,i)= ((y-outputtR(:,i)).^2);
+% 
+% end
 
 for i=1:size(X,1)
 [clem,clem2]=min(Alll(i,:));
