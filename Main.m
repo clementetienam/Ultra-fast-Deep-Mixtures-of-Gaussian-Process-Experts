@@ -647,7 +647,11 @@ L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
-if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 R2now=R2;
@@ -876,7 +880,12 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+
+if (abs(R2-R2now) < 0.0001) || (i==20)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 %end
@@ -1595,7 +1604,11 @@ L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
-if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 R2now=R2;
@@ -1802,7 +1815,11 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 %end
@@ -2766,7 +2783,11 @@ L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
-if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 R2now=R2;
@@ -2969,7 +2990,11 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 %end
@@ -3854,7 +3879,11 @@ L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
-if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 R2now=R2;     
@@ -4064,7 +4093,11 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 %end
@@ -4874,7 +4907,11 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 R2now=R2;
@@ -5191,7 +5228,11 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 
 %if i>=2
-if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < 0.0001) || (i==50)
+   break;
+end
+
+if (R2==100) || (RMSE==0.00) 
    break;
 end
 %end
