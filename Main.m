@@ -4,7 +4,7 @@ close all;
 disp('@Author: Dr Clement Etienam')
 disp('@Supervisor: Professor Kody Law')
 disp('@Collaborator External : Professor Sara Wade')
-disp('Ultra fast Deep Mixture of Gaussian Experts')
+disp('Ultra fast Deep Mixture of  Sparse Gaussian Experts')
 disp('Ths code is flexible and constructs a supervised learning model')
 disp(' Three broader schemes are presented')
 disp('1: Standard approaches void of any ensemble computation')
