@@ -1,5 +1,11 @@
 function [Valuee,Valuees,cost]=prediction_clement(weights,dd_updated,X,y,Xtrains,ytrains,Experts)
   labelDA =dd_updated; %target prediction
+  % Here we should first prediction the class labels, i.e:
+  % [~,D] = predictNN(X, modelNN); 
+  % for i=1:size(X,1)
+  %     [clem,clem2]=max(D(i,:));
+  %     labelDA(i)=clem2;
+  % end
 
 	meanfunc=[];
 likfunc = {@likGauss};    
@@ -31,7 +37,8 @@ Valuee(indee,:)= zz;
 Valuees(indee,:)= s2;
      else
 
-       Valuee(indee,:)= 0; 
+       Valuee(indee,:)= 0; % This should be mean function 
+       % Also  Valuees(indee,:)=  should be magnitude + likelihood variance
      end
         
 

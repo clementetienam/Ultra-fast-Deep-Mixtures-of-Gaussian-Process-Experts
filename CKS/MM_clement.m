@@ -30,10 +30,13 @@ for L=1:Experts
 end
 
 %% softmax
-[p,D] = predictNN(X, modelNN); 
+[p,D] = predictNN(X, modelNN);
+% Note: looking at the code, D is not the softmax output!!! Thus, below we
+% do NOT need log(D)
 
 
  First_term=-(log(D));
+ % This should be First_term=-(D);
  for i=1:Experts
  second_term(:,i)= 0.5*log((outputS(:,i)));
  end

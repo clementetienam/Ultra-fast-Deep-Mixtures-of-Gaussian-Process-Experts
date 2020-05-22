@@ -1,6 +1,9 @@
 function [Valuee,variance2,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
 
    [~,D] = predictNN(X, modelNN); 
+   % Note: looking at the code, D is not the softmax output!!! Thus, we
+   % need to first softmax to get the probabilities
+   % Transform D with softmax
 
 numcols=size(D,2);
 Valueer=zeros(size(X,1),numcols);
@@ -25,8 +28,8 @@ for i=1:Experts
 
 zz=reshape(zz,[],1);
     else
-        zz=0;
-        s2=0;
+        zz=0; % This should be mean function 
+        s2=0; % This should be magnitude + likelihood variance
     end
 getit=D(:,i).*zz;
 Valueer(:,i)=getit;
