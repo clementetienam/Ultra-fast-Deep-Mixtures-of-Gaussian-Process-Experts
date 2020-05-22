@@ -30,10 +30,10 @@ for L=1:Experts
 end
 
 %% softmax
-[p,D] = predictNN(X, modelNN); 
-
-
-First_term=-(log(D));
+[~,D] = predictNN(X, modelNN); 
+a = sum(D,2);
+D = bsxfun(@rdivide, D, a);
+First_term=-((D));
 for i=1:Experts
 second_term(:,i)= 0.5*log((outputS(:,i)));
 end

@@ -1,6 +1,8 @@
 function [Valuee,variance2,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
 
    [~,D] = predictNN(X, modelNN); 
+a = sum(D,2);
+D = bsxfun(@rdivide, D, a);   
 
 numcols=size(D,2);
 Valueer=zeros(size(X,1),numcols);
@@ -21,7 +23,7 @@ for i=1:Experts
     yuse=ytrains{i,:};
 	cov1 = {'apxSparse',cov,hyp_use.xu};  
     a00=X ; 
-    [zz s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
+    [zz, s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
 
 zz=reshape(zz,[],1);
     else
