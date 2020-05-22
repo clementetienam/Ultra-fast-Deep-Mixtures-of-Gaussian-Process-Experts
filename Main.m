@@ -646,13 +646,38 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
+if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
     %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+ Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+Xtrains=cell(Experts,1);
+ytrains=cell(Experts,1);
+
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)>= 2
+[hyper_updated,Xuse,yuse]=optimise_experts(diff_c,X_train,y_train,Classe,...
+    meanfunc,likfunc,inf,cov,infv,method2);
+    weights_updated{ik,1}=hyper_updated;
+    Xtrains{ik,1}=Xuse;
+    ytrains{ik,1}=yuse;
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
  %%
@@ -699,7 +724,7 @@ cd(oldfolder)
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -849,9 +874,9 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 %end
@@ -859,6 +884,30 @@ R2now=R2;
     fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+Xtrains=cell(Experts,1);
+ytrains=cell(Experts,1);
+
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)>= 2
+[hyper_updated,Xuse,yuse]=optimise_experts(diff_c,X_train,y_train,Classe,...
+    meanfunc,likfunc,inf,cov,infv,method2);
+    weights_updated{ik,1}=hyper_updated;
+    Xtrains{ik,1}=Xuse;
+    ytrains{ik,1}=yuse;
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end 
 % [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
@@ -904,7 +953,7 @@ cd(oldfolder)
 %% Prediction on Training data Training accuracy);
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Unseen_soft_prediction_clement(weights_updated,...
@@ -1545,13 +1594,37 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
+if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
     %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+ Class_all=cell(Experts,1);
+%% 
+
+for i=1:Experts
+    Classe=find(dd_updated==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('DO REGRESSION STEP')
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor i=1:Experts
+ fprintf('Starting Expert %d... .\n', i);     
+ Classe= Class_all{i,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_experts_dnn(X_train,y_train,Classe);
+ weights_updated{i,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', i);     
+end
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,updated_classtheta,nnOptions );
  %%
@@ -1599,7 +1672,7 @@ cd(oldfolder)
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn(weights_updated,...
-    dd_updated,X_train,y_train,Class_all,Experts);
+    dd_tola,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn...
@@ -1727,9 +1800,9 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 %end
@@ -1737,6 +1810,29 @@ R2now=R2;
     %fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+Class_all=cell(Experts,1);
+%% 
+
+for i=1:Experts
+    Classe=find(dd_updated==i);
+    Class_all{i,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('DO REGRESSION STEP')
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor i=1:Experts
+ fprintf('Starting Expert %d... .\n', i);     
+ Classe= Class_all{i,1}; 
+ if size(Classe,1)~= 0
+[net]=optimise_experts_dnn(X_train,y_train,Classe);
+ weights_updated{i,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', i);     
+end 
 % [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
@@ -1783,7 +1879,7 @@ cd(oldfolder)
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 [Valueehardtr,costhardt]=prediction_clement_dnn(weights_updated,...
-    dd_updated,X_train,y_train,Class_all,Experts);
+    dd_tola,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn...
     (weights_updated,modelNN,X_train,y_train,Class_all,Experts);
@@ -2669,7 +2765,8 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
+if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
@@ -2678,6 +2775,26 @@ R2now=R2;
  %%
   [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
                 hiddenLayers,layers,updated_classtheta,nnOptions );
+            
+ Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)~= 0
+ [net]=optimise_experts_dnn_2(X_train,y_train,Classe); 
+weights_updated{ik,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end           
  %%
 oldfolder=cd;
 cd(oldfolder) % setting original directory
@@ -2723,7 +2840,7 @@ cd(oldfolder)
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn_2(weights_updated,...
-    dd_updated,X_train,y_train,Class_all,Experts);
+    dd_tola,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn_2...
@@ -2850,9 +2967,9 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-
+fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 %end
@@ -2862,6 +2979,25 @@ R2now=R2;
  %%
  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
                 hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)~= 0
+ [net]=optimise_experts_dnn_2(X_train,y_train,Classe); 
+weights_updated{ik,1}=net;
+
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end            
 %%           
 oldfolder=cd;
 cd(oldfolder) % setting original directory
@@ -2906,7 +3042,7 @@ cd(oldfolder)
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 [Valueehardtr,costhardt]=prediction_clement_dnn_2(weights_updated,...
-    dd_updated,X_train,y_train,Class_all,Experts);
+    dd_tola,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn_2...
     (weights_updated,modelNN,X_train,y_train,Class_all,Experts);
@@ -3718,7 +3854,7 @@ L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
-if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;     
@@ -3791,7 +3927,7 @@ cd(oldfolder)
 dd_tola= str2double(predict(Mdl,X_train));
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
     X_train,y_train,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -3928,7 +4064,7 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 fprintf('R2 went from %4.4f to %4.4f... .\n', R2now,R2);    
 %if i>=2
-if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 %end
@@ -4003,7 +4139,7 @@ cd(oldfolder)
 
 dd_tola= str2double(predict(Mdl,X_train));
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
     X_train,y_train,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Soft_prediction_RF(weights_updated,...
@@ -4738,13 +4874,44 @@ R2_allmm(i,:)=R2;
 L2_allmm(i,:)=L2;
 RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
-if abs(R2-R2now) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if (abs(R2-R2now) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 R2now=R2;
     fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+Class_all=cell(Experts,1);
+%% Gp paramters for experts
+meanfunc=[];
+likfunc = {@likGauss};    
+inf = @infGaussLik;
+cov = {@covSEiso}; 
+infv  = @(varargin) inf(varargin{:},struct('s',1.0));   
+for ii=1:Experts
+    Classe=find(dd_updated==ii);
+    Class_all{ii,1}=Classe;
+    
+end 
+weights_updated=cell(Experts,1);
+Xtrains=cell(Experts,1);
+ytrains=cell(Experts,1);
+disp('*******************************************************************')
+disp('DO REGRESSION STEP')
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+for iq=1:Experts
+ fprintf('Starting Expert %d... .\n', iq);     
+ Classe= Class_all{iq,1}; 
+ if size(Classe,1)>= 2
+[hyper_updated,Xuse,yuse]=optimise_experts(diff_c,X_train,y_train,Classe,...
+    meanfunc,likfunc,inf,cov,infv,method2);
+    weights_updated{iq,1}=hyper_updated;
+    Xtrains{iq,1}=Xuse;
+    ytrains{iq,1}=yuse;
+ end
+ fprintf('Finished Expert %d... .\n', iq);     
+end 
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
  %%
@@ -4758,7 +4925,7 @@ cd(oldfolder)
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -5024,7 +5191,7 @@ RMSE_allmm(i,:)=RMSE;
 valueallmm(:,i)=Valuee;
 
 %if i>=2
-if (abs(R2-R2now)) < (0.0001) || (i==50) || (RMSE==0.00) || (R2==100)
+if ((abs(R2-R2now)) < (0.0001)) || (i==50) || (RMSE==0.00) || (R2==100)
    break;
 end
 %end
@@ -5035,7 +5202,8 @@ R2now=R2;
 %% Prediction on Training data Training accuracy);
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,X_train,y_train,Xtrains,ytrains,Experts);
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,...
+    dd_tola,X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement(weights_updated,modelNN,X_train,y_train,Xtrains,ytrains,Experts);
 R2hardt=costhardt.R2;
@@ -5667,6 +5835,30 @@ valueallmm(:,i)=Valuee;
     fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+Xtrains=cell(Experts,1);
+ytrains=cell(Experts,1);
+
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)>= 2
+[hyper_updated,Xuse,yuse]=optimise_experts(diff_c,X_train,y_train,Classe,...
+    meanfunc,likfunc,inf,cov,infv,method2);
+    weights_updated{ik,1}=hyper_updated;
+    Xtrains{ik,1}=Xuse;
+    ytrains{ik,1}=yuse;
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end 
 %  [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
  %%
@@ -5713,7 +5905,7 @@ cd(oldfolder)
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -5867,6 +6059,30 @@ valueallmm(:,i)=Valuee;
     fprintf('Finished iteration %d... .\n', i);          
  end
  %%
+Class_all=cell(Experts,1);
+for ii=1:Experts
+Classe=find(dd_updated==ii);
+Class_all{ii,1}=Classe;    
+end 
+
+weights_updated=cell(Experts,1);
+Xtrains=cell(Experts,1);
+ytrains=cell(Experts,1);
+
+disp('*******************************************************************')
+disp('Optimise experts in parallel')
+parfor ik=1:Experts
+ fprintf('Starting Expert %d... .\n', ik);     
+ Classe= Class_all{ik,1}; 
+ if size(Classe,1)>= 2
+[hyper_updated,Xuse,yuse]=optimise_experts(diff_c,X_train,y_train,Classe,...
+    meanfunc,likfunc,inf,cov,infv,method2);
+    weights_updated{ik,1}=hyper_updated;
+    Xtrains{ik,1}=Xuse;
+    ytrains{ik,1}=yuse;
+ end
+ fprintf('Finished Expert %d... .\n', ik);     
+end 
 % [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
@@ -5912,7 +6128,7 @@ cd(oldfolder)
 %% Prediction on Training data Training accuracy);
 [dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_updated,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Unseen_soft_prediction_clement(weights_updated,...
