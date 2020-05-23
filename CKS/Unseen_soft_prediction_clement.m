@@ -1,7 +1,7 @@
 function [Valuee,variance2,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
 
    %[~,D] = predictNN(X, modelNN); 
-[~,D]=pred_class(X_train,modelNN);
+[~,D]=pred_class(X,modelNN);
 a = sum(D,2);
 D = bsxfun(@rdivide, D, a);   
 
