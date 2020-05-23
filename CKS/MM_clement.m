@@ -30,10 +30,9 @@ for L=1:Experts
 end
 
 %% softmax
-[~,D] = predictNN(X, modelNN); 
-a = sum(D,2);
-D = bsxfun(@rdivide, D, a);
-D=log(D); %made the changes here
+[~,D]=pred_class(X,modelNN);
+D=log(D);
+
 First_term=-((D));
 for i=1:Experts
 second_term(:,i)= 0.5*log((outputS(:,i)));
@@ -42,7 +41,7 @@ end
 for i=1:Experts
 a=(y-outputtR(:,i)).^2;
 b=2.*outputS(:,i);
-c=sqrt(outputS(:,i)).*sqrt(2*pi); % used the correct log likelihood equation here
+c=sqrt(outputS(:,i)).*sqrt(2*pi);
 c=1./c;
 third_term(:,i)=c.*log((a./b)) ;
 end
@@ -51,7 +50,7 @@ end
 
 % for i=1:Experts
 % 
-% thirds_term(:,i)= ((y-outputtR(:,i)).^2);
+% thirds_terms(:,i)= ((y-outputtR(:,i)).^2);
 % 
 % end
 
