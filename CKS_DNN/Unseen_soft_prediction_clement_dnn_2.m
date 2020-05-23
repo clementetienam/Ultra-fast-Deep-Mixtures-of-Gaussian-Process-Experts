@@ -1,8 +1,9 @@
 function [Valuee,cost]=Unseen_soft_prediction_clement_dnn_2(weights,modelNN,X,y,Class_all,Experts)
 
-   [labelDA,D] = predictNN(X, modelNN); 
+[~,D]=pred_class(X,modelNN);
 
-
+a = sum(D,2);
+D = bsxfun(@rdivide, D, a);  
 Valueer=zeros(size(X,1),Experts);
 
 for i=1:Experts
