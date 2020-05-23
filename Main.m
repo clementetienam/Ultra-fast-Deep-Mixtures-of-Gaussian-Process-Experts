@@ -742,7 +742,7 @@ stdtr=clfy.inverse_transform(stdtr);
 sstdtr=clfy.inverse_transform(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
-[dd,~]=pred_class(X_test,modelNN);
+[dd_tola,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
 [Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
