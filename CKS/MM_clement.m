@@ -1,12 +1,12 @@
 function labels = MM_clement(weights,X,y,modelNN,Class_all,Experts)
 % weights=weights_updated;
 	meanfunc=[];
- likfunc = {@likGauss};    
+ likfunc = {@likGauss};
 
   inf = @infGaussLik;
 %  inf=@infGaussLik;
- cov = {@covSEiso}; 
- infv  = @(varargin) inf(varargin{:},struct('s',1.0));   
+ cov = {@covSEiso};
+ infv  = @(varargin) inf(varargin{:},struct('s',1.0));
  dd=size(X,1);
  m=zeros(size(X,1),1);
  outputtR=zeros(dd,Experts);
@@ -15,10 +15,10 @@ for L=1:Experts
     Classuse=Class_all{L,:};
     if size(X(Classuse),1)>= 2
     weigt=weights{L,:};
-    
-	cov1 = {'apxSparse',cov,weigt.xu};     
+
+	cov1 = {'apxSparse',cov,weigt.xu};
     [m s2] = gp(weigt, infv, meanfunc, cov1, likfunc, X(Classuse,:), y(Classuse,:), X);
-  
+
      outputtR(:,L)=m;
      outputS(:,L)=s2;
     else
@@ -30,22 +30,19 @@ for L=1:Experts
 end
 
 %% softmax
-[p,D] = predictNN(X, modelNN);
-% Note: looking at the code, D is not the softmax output!!! Thus, below we
-% do NOT need log(D)
-
-
- First_term=-(log(D));
- % This should be First_term=-(D);
- for i=1:Experts
- second_term(:,i)= 0.5*log((outputS(:,i)));
- end
-% 
+[~,D] = predictNN(X, modelNN);
+a = sum(D,2);
+D = bsxfun(@rdivide, D, a);
+First_term=-((D));
+for i=1:Experts
+second_term(:,i)= 0.5*log((outputS(:,i)));
+end
+%
  for i=1:Experts
   under=1/(2.*outputS(:,i));
  third_term(:,i)= under*((y-outputtR(:,i)).^2);
  end
-% 
+%
  Alll= First_term+second_term+third_term;
 
 %for i=1:Experts

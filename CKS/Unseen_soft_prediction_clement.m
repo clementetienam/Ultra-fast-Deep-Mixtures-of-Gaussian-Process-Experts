@@ -1,9 +1,8 @@
 function [Valuee,variance2,cost]=Unseen_soft_prediction_clement(weights,modelNN,X,y,Xtrains,ytrains,Experts)
 
-   [~,D] = predictNN(X, modelNN); 
-   % Note: looking at the code, D is not the softmax output!!! Thus, we
-   % need to first softmax to get the probabilities
-   % Transform D with softmax
+   [~,D] = predictNN(X, modelNN);
+a = sum(D,2);
+D = bsxfun(@rdivide, D, a);
 
 numcols=size(D,2);
 Valueer=zeros(size(X,1),numcols);
@@ -11,24 +10,24 @@ Term_1=zeros(size(X,1),numcols);
 Term_2=zeros(size(X,1),numcols);
 Term_3=zeros(size(X,1),numcols);
 	meanfunc=[];
-likfunc = {@likGauss};    
+likfunc = {@likGauss};
 
 inf = @infGaussLik;
- cov = {@covSEiso}; 
- infv  = @(varargin) inf(varargin{:},struct('s',1.0));   
+ cov = {@covSEiso};
+ infv  = @(varargin) inf(varargin{:},struct('s',1.0));
 for i=1:Experts
-    
+
     hyp_use=weights{i,:};
     Xuse=Xtrains{i,:};
     if size(Xuse,1)~= 0
     yuse=ytrains{i,:};
-	cov1 = {'apxSparse',cov,hyp_use.xu};  
-    a00=X ; 
-    [zz s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
+	cov1 = {'apxSparse',cov,hyp_use.xu};
+    a00=X ;
+    [zz, s2] = gp(hyp_use, infv, meanfunc, cov1, likfunc, Xuse, yuse, a00);
 
 zz=reshape(zz,[],1);
     else
-        zz=0; % This should be mean function 
+        zz=0; % This should be mean function
         s2=0; % This should be magnitude + likelihood variance
     end
 getit=D(:,i).*zz;
@@ -58,7 +57,7 @@ variance2=sum(Term_1,2)+(sum(Term_2,2)-(sum(Term_3,2)).^2);
    squared_error=(absolute_error).^2;
    MSE=mean(squared_error);
    RMSE=MSE.^0.5;
-  
+
    cost.R2=R2;
    cost.L2=L2;
    cost.L1norm=L1norm;
