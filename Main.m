@@ -465,8 +465,8 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
@@ -485,8 +485,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 folder = 'Results_CCR';
 mkdir(folder);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
@@ -738,8 +738,8 @@ disp('*******************************************************************')
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
 [dd_tola,~]=pred_class(X_test,modelNN);
@@ -758,8 +758,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -969,8 +969,8 @@ R2softt=costsoftt.R2;
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
@@ -986,8 +986,8 @@ R2soft=costsoft.R2;
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -3700,8 +3700,8 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 dd_tola = str2double(predict(Mdl,X_test)); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
@@ -3720,8 +3720,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 
 
 folder='Results_CCR';
@@ -3956,8 +3956,8 @@ disp('*******************************************************************')
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
 dd_tola= str2double(predict(Mdl,X_test));
@@ -3976,8 +3976,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -4170,8 +4170,8 @@ R2softt=costsoftt.R2;
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 %[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 [dd_tola]= str2double(predict(Mdl,X_test));
@@ -4188,8 +4188,8 @@ R2soft=costsoft.R2;
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform...
     (hardtr,softtr,hardts,softts,yini,...
     method,folder,Xini,ind_train,ind_test,oldfolder,Datause,stdtr,stdte,...
@@ -5946,8 +5946,8 @@ disp('*******************************************************************')
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
 [dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
@@ -5966,8 +5966,8 @@ disp('*******************************************************************')
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform(hardtr,...
     softtr,hardts,softts,...
     yini,method,folder,Xini,ind_train,ind_test,oldfolder,Datause,...
@@ -6167,8 +6167,8 @@ R2softt=costsoftt.R2;
 
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
-stdtr=clfy.inverse_transform(stdtr);
-sstdtr=clfy.inverse_transform(sstdtr);
+stdtr=clfy.inverse_transform_var(stdtr);
+sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 [dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
@@ -6184,8 +6184,8 @@ R2soft=costsoft.R2;
 disp(' Rescale back the predictions and save to file')
 hardts=clfy.inverse_transform(Valueehard);
 softts=clfy.inverse_transform(Valueesoft);
-stdte=clfy.inverse_transform(stdte);
-sstdte=clfy.inverse_transform(sstdte);
+stdte=clfy.inverse_transform_var(stdte);
+sstdte=clfy.inverse_transform_var(sstdte);
 [hardanswer,softanswer,ind_train,ind_test,stdclem,stdsclem]=Plot_perform(hardtr,...
     softtr,hardts,softts,...
     yini,method,folder,Xini,ind_train,ind_test,oldfolder,Datause,...

@@ -1,0 +1,7 @@
+The R2 accuracy for hard prediction on (training data) is 69.78 
+The R2 accuracy for soft prediction on (training data) is 76.72 
+The R2 accuracy for hard prediction on (test data) is 84.82 
+The R2 accuracy for soft prediction on (test data) is 89.15 
+The wall clock time is 1317.52 secs 
+The number of experts used is 7 
+The Neural Network Classifier architecture is: [1 200 40 30 7 ]

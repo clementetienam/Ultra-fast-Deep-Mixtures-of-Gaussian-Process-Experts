@@ -59,5 +59,14 @@ classdef MinMaxScalery < BaseEstimator & TransformerMixin
             X_orig = bsxfun(@times,X_orig,obj.data_max_-obj.data_min_);
             X_orig = bsxfun(@plus,X_orig,obj.data_min_);
         end
+        
+        % Undo the scaling of Var(X) according to feature_range.
+        function X_orig = inverse_transform_var(obj,X)
+            % scale between 0 and 1
+            X_orig = (X)/(diff(obj.feature_range)^2);
+            
+            % scale between data_min_ and data_max_
+            X_orig = bsxfun(@times,X_orig,(obj.data_max_-obj.data_min_)^2);
+        end
     end
 end
