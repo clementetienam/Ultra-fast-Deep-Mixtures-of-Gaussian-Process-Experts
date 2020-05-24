@@ -24,6 +24,9 @@ disp('1=Standard Approach for Machine')
 disp('2=Ensemble approach for machine')
 disp('3= 2 iterations approach for machine-MM2r')
 bigclement=input('Enter the option as stated above: ');
+if bigclement > 3
+error('Wrong choice please select 1-3')
+end
 disp('*******************************************************************')
 %%
 if bigclement==1 % This is the broader schemes
@@ -1061,6 +1064,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -1988,6 +1994,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -2265,6 +2274,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 3
+error('Wrong choice please select 1-3')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -3150,6 +3162,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -3403,6 +3418,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -4173,7 +4191,6 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-%[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 [dd_tola]= str2double(predict(Mdl,X_test));
 disp('predict Hard Prediction on test data')
 [Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
@@ -4275,6 +4292,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
@@ -5447,6 +5467,9 @@ disp('12=Liu data-Large-scale Heteroscedastic Regression via Gaussian Process')
 disp('13=Mixture model 1 data')
 disp('14=Mixture model 2 data')
 Datause=input('Enter the dataset from 1-14 you want to simulate: ');
+if Datause > 14
+error('Wrong choice please select 1-14')
+end
 switch Datause
     case 1
         cd('data/Nasa')
