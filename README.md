@@ -25,7 +25,7 @@ and K-means for initialising the inducing points
 
 Datasets
 -----------------------------
-The 10 datasets used in the paper are provided in the script, together with an extra 4 datasets.
+The 10 datasets used in the paper are provided in the script, together with an extra 4 datasets. For the Chi data in the data folder, subfolder  (Experiment 10) the data is zipped and the file would have to be unzipped before being used.
 
 Running the Numerical Experiment:
 Run the script Main.m following the prompts on the screen
