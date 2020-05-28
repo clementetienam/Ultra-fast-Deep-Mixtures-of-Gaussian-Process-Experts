@@ -1,6 +1,6 @@
 function labels = MM_clement(weights,X,y,modelNN,Class_all,Experts)
 % weights=weights_updated;
-	meanfunc=[];
+	meanfunc=@meanConst;
  likfunc = {@likGauss};    
 
   inf = @infGaussLik;
@@ -53,7 +53,7 @@ end
 % thirds_terms(:,i)= ((y-outputtR(:,i)).^2);
 % 
 % end
-
+%%
 for i=1:size(X,1)
 [clem,clem2]=min(Alll(i,:));
 clemall(:,i)=clem2;

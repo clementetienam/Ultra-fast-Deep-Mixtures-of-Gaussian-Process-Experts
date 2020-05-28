@@ -7,7 +7,7 @@ function [Valuee,Valuees,cost]=prediction_clement(weights,dd_updated,X,y,Xtrains
   %     labelDA(i)=clem2;
   % end
 
-	meanfunc=[];
+	meanfunc=@meanConst;
 likfunc = {@likGauss};    
 
 inf = @infGaussLik;

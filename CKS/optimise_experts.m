@@ -3,6 +3,7 @@ hyper_in=initialize_weights(diff_c);
 Xuse=X_train(Classe,:);
 yuse=y_train(Classe,:);
 if size(Xuse,1)~= 0
+hyper_out.mean=0;    
 hyper_out.cov=hyper_in(1:2,:);
 hyper_out.lik=hyper_in(3,:);
 xsparse=get_inducing_kmeans(Xuse,method2);

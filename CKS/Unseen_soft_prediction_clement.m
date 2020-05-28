@@ -10,7 +10,7 @@ Valueer=zeros(size(X,1),numcols);
 Term_1=zeros(size(X,1),numcols);
 Term_2=zeros(size(X,1),numcols);
 Term_3=zeros(size(X,1),numcols);
-	meanfunc=[];
+	meanfunc=@meanConst;
 likfunc = {@likGauss};    
 
 inf = @infGaussLik;
