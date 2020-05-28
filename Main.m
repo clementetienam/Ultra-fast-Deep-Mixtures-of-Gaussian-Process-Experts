@@ -420,7 +420,7 @@ modelNN=Classify_Clement(X_train,dd,Experts);
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp parameters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -557,7 +557,7 @@ modelNN=Classify_Clement(X_train,dd,Experts);
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp parameters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -809,7 +809,7 @@ disp('*******************************************************************')
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
- meanfunc=[];
+ meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -4635,7 +4635,7 @@ disp('DO CLASSIFICATION STEP')
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp paramters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -4824,7 +4824,7 @@ disp('DO CLASSIFICATION STEP')
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp parameters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -4928,7 +4928,7 @@ R2now=R2;
  %%
 Class_all=cell(Experts,1);
 %% Gp paramters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -5164,7 +5164,7 @@ for mum=1:iterra
 fprintf('Starting realisation %d... .\n', mum);      
 tic;
  R2now=0; 
- meanfunc=[];
+ meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -5792,7 +5792,7 @@ disp('DO CLASSIFICATION STEP')
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp parameters for experts
-meanfunc=[];
+meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
@@ -6037,7 +6037,7 @@ disp('---------------------------MM-MM SCHEME----------------------------')
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
- meanfunc=[];
+ meanfunc=@meanConst;
 likfunc = {@likGauss};    
 inf = @infGaussLik;
 cov = {@covSEiso}; 
