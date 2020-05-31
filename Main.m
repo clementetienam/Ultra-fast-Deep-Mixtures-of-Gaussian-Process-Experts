@@ -5786,9 +5786,9 @@ idx = kmeans(Data,Experts,'MaxIter',500);
 dd=idx; 
 disp('*******************************************************************')
 disp('DO CLASSIFICATION STEP')
-[modelNN] = learnNN(X_train, dd, nrOfLabels,input_layer_size,...
-               hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
-[dd,~] = predictNN(X_train, modelNN); % Predicts the Labels            
+modelNN=Classify_Clement(X_train,dd,Experts);
+[dd,~]=pred_class(X_train,modelNN);
+
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
 %% Gp parameters for experts
@@ -5826,7 +5826,7 @@ disp('*******************************************************************')
 
 % [modelNN,updated_classtheta] = learnNN(X_train, dd, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
-[dd,~] = predictNN(X_train, modelNN); % Predicts the Labels              
+[dd,~]=pred_class(X_train,modelNN);
 [Valuee1,~,cost3]=prediction_clement(weights_updated,dd,X_train,y_train,...
     Xtrains,ytrains,Experts);
     R2ccr=cost3.R2;
@@ -5954,7 +5954,7 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_tola,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
@@ -5973,7 +5973,7 @@ stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_tola,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
 [Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,...
@@ -6094,9 +6094,7 @@ else
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
 end
 
-[modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
-               hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
- %[dd_updated,D] = predictNN(X_train, modelNN); % Predicts the Labels 
+modelNN=Classify_Clement(X_train,dd,Experts);
 
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
      y_train,Xtrains,ytrains,Experts);
@@ -6178,7 +6176,7 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_tola,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 [Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
     X_train,y_train,Xtrains,ytrains,Experts);
@@ -6193,7 +6191,7 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_tola,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
 [Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
     y_test,Xtrains,ytrains,Experts);
