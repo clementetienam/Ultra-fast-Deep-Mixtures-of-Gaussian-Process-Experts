@@ -1,7 +1,7 @@
 function [Valueehard,Valueesoft,ind_train,ind_test,stdclem,stdsclem]= ...
     Plot_perform(hardtr,softtr,hardts,softts,y,method,folder,X,ind_train,...
     ind_test,oldfolder,Datause,stdtr,stdte,sstdtr,sstdte)
-
+%%
 Valueehard=zeros(size(X,1),1);
 Valueehard(ind_train,:)=hardtr;
 Valueehard(ind_test,:)=hardts;
@@ -135,8 +135,11 @@ usee=abs(stdsclem);
 
 error=sqrt(usee);
 x=X;
-f = [hard+2*error; flipdim(hard-2*error,1)];
-fill([x; flipdim(x,1)], f, [7 7 7]/8)
+[xs,is] = sort(x);
+%f = [hard+2*error; flipdim(hard-2*error,1)];
+f = [hard(is)+2*error(is); flipdim(hard(is)-2*error(is),1)];
+%fill([x; flipdim(x,1)], f, [7 7 7]/8)
+fill([xs; flipdim(xs,1)], f, [7 7 7]/8)
 hold on; 
 plot(x(Train_indices),hard(Train_indices),'+','color','k');
 hold on
@@ -161,8 +164,10 @@ usee=abs(stdclem);
 
 error=sqrt(usee);
 x=X;
-f = [hard+2*error; flipdim(hard-2*error,1)];
-fill([x; flipdim(x,1)], f, [7 7 7]/8)
+f = [hard(is)+2*error(is); flipdim(hard(is)-2*error(is),1)];
+%f = [hard+2*error; flipdim(hard-2*error,1)];
+%fill([x; flipdim(x,1)], f, [7 7 7]/8)
+fill([xs; flipdim(xs,1)], f, [7 7 7]/8)
 hold on; 
 plot(x(Train_indices),hard(Train_indices),'+','color','k');
 hold on
@@ -250,4 +255,5 @@ cd(folder)
 saveas(gcf,'performance.fig')
 cd(oldfolder)
 end
+
 end
