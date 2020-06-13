@@ -4706,10 +4706,10 @@ softts=clfy.inverse_transform(Valueesoft);
     method,Xini,ind_train,ind_test,Datause,stdtr,stdte);
 Hardbig(:,mum)=hardanswer;
 Softbig(:,mum)= softanswer;
-R2hardtrainingtola(mum,:)=R2hardt;
-R2hardtesttola(mum,:)=R2hard;
-R2softtrainingtola(mum,:)=R2softt;
-R2softtesttola(mum,:)=R2soft;
+R2hardtraininguniee(mum,:)=R2hardt;
+R2hardtestuniee(mum,:)=R2hard;
+R2softtraininguniee(mum,:)=R2softt;
+R2softtestuniee(mum,:)=R2soft;
 Bigwallclock(mum,:)=tt;
 stdbig(:,mum)=stdclem;
 disp('*******************************************************************')  
@@ -4718,10 +4718,10 @@ disp('*******************************************************************')
     end
 
 
-fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtrainingtola == min(R2hardtrainingtola)),min(R2hardtrainingtola));
-fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtesttola == min(R2hardtesttola)),min(R2hardtesttola));
-fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtrainingtola == min(R2softtrainingtola)),min(R2softtrainingtola));
-fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtesttola == min(R2softtesttola)),min(R2softtesttola));
+fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtraininguniee == min(R2hardtraininguniee)),min(R2hardtraininguniee));
+fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtestuniee == min(R2hardtestuniee)),min(R2hardtestuniee));
+fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtraininguniee == min(R2softtraininguniee)),min(R2softtraininguniee));
+fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtestuniee == min(R2softtestuniee)),min(R2softtestuniee));
    
     
 folder = 'Results_CCR';
@@ -4731,10 +4731,10 @@ cd(folder)
 
 save('predict_hard.out','Hardbig','-ascii')
 save('predict_soft.out','Softbig','-ascii')
-save('R2hardtraining.out','R2hardtrainingtola','-ascii')
-save('R2hardtesting.out','R2hardtesttola','-ascii')
-save('R2softtraining.out','R2softtrainingtola','-ascii')
-save('R2softtesting.out','R2softtesttola','-ascii')
+save('R2hardtraining.out','R2hardtraininguniee','-ascii')
+save('R2hardtesting.out','R2hardtestuniee','-ascii')
+save('R2softtraining.out','R2softtraininguniee','-ascii')
+save('R2softtesting.out','R2softtestuniee','-ascii')
 save('Bigwallclock.out','Bigwallclock','-ascii')
 save('Bigstd.out','stdbig','-ascii')
 cd(oldfolder)
@@ -4743,7 +4743,7 @@ xx=[1:iterra]';
 
 figure()
 subplot(2,2,1)
-plot(xx,R2hardtrainingtola,'r','LineWidth',1)
+plot(xx,R2hardtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -4753,7 +4753,7 @@ set(gcf,'color','white')
 legend('CCR','location','northeast');
 
 subplot(2,2,2)
-plot(xx,R2hardtesttola,'r','LineWidth',1)
+plot(xx,R2hardtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -4763,7 +4763,7 @@ set(gcf,'color','white')
 legend('CCR','location','northeast');
 
 subplot(2,2,3)
-plot(xx,R2softtrainingtola,'r','LineWidth',1)
+plot(xx,R2softtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations')
@@ -4773,7 +4773,7 @@ set(gcf,'color','white')
 legend('CCR','location','northeast');
 
 subplot(2,2,4)
-plot(xx,R2softtesttola,'r','LineWidth',1)
+plot(xx,R2softtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5006,10 +5006,10 @@ softts=clfy.inverse_transform(Valueesoft);
     method,Xini,ind_train,ind_test,Datause,stdtr,stdte);
 Hardbig(:,mum)=hardanswer;
 Softbig(:,mum)= softanswer;
-R2hardtrainingtola(mum,:)=R2hardt;
-R2hardtesttola(mum,:)=R2hard;
-R2softtrainingtola(mum,:)=R2softt;
-R2softtesttola(mum,:)=R2soft;
+R2hardtraininguniee(mum,:)=R2hardt;
+R2hardtestuniee(mum,:)=R2hard;
+R2softtraininguniee(mum,:)=R2softt;
+R2softtestuniee(mum,:)=R2soft;
 Bigwallclock(mum,:)=tt; 
 stdbig(:,mum)=stdclem;
 R2evolve{mum,1}=R2_allmm;
@@ -5019,10 +5019,10 @@ disp('*******************************************************************')
 fprintf('Finished realisation %d... .\n', mum);   
     end
 
-fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtrainingtola == min(R2hardtrainingtola)),min(R2hardtrainingtola));
-fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtesttola == min(R2hardtesttola)),min(R2hardtesttola));
-fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtrainingtola == min(R2softtrainingtola)),min(R2softtrainingtola));
-fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtesttola == min(R2softtesttola)),min(R2softtesttola));
+fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtraininguniee == min(R2hardtraininguniee)),min(R2hardtraininguniee));
+fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtestuniee == min(R2hardtestuniee)),min(R2hardtestuniee));
+fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtraininguniee == min(R2softtraininguniee)),min(R2softtraininguniee));
+fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtestuniee == min(R2softtestuniee)),min(R2softtestuniee));
 
     
     
@@ -5036,10 +5036,10 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-save('R2hardtraining.out','R2hardtrainingtola','-ascii')
-save('R2hardtesting.out','R2hardtesttola','-ascii')
-save('R2softtraining.out','R2softtrainingtola','-ascii')
-save('R2softtesting.out','R2softtesttola','-ascii')
+save('R2hardtraining.out','R2hardtraininguniee','-ascii')
+save('R2hardtesting.out','R2hardtestuniee','-ascii')
+save('R2softtraining.out','R2softtraininguniee','-ascii')
+save('R2softtesting.out','R2softtestuniee','-ascii')
 save('Bigwallclock.out','Bigwallclock','-ascii')
 cd(oldfolder)
 
@@ -5047,7 +5047,7 @@ xx=[1:iterra]';
 
 figure()
 subplot(2,2,1)
-plot(xx,R2hardtrainingtola,'r','LineWidth',1)
+plot(xx,R2hardtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5057,7 +5057,7 @@ set(gcf,'color','white')
 legend('CCR-MM','location','northeast');
 
 subplot(2,2,2)
-plot(xx,R2hardtesttola,'r','LineWidth',1)
+plot(xx,R2hardtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5067,7 +5067,7 @@ set(gcf,'color','white')
 legend('CCR-MM','location','northeast');
 
 subplot(2,2,3)
-plot(xx,R2softtrainingtola,'r','LineWidth',1)
+plot(xx,R2softtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations')
@@ -5077,7 +5077,7 @@ set(gcf,'color','white')
 legend('CCR-MM','location','northeast');
 
 subplot(2,2,4)
-plot(xx,R2softtesttola,'r','LineWidth',1)
+plot(xx,R2softtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5279,10 +5279,10 @@ softts=clfy.inverse_transform(Valueesoft);
     method,Xini,ind_train,ind_test,Datause,stdtr,stdte);
 Hardbig(:,mum)=hardanswer;
 Softbig(:,mum)= softanswer;
-R2hardtrainingtola(mum,:)=R2hardt;
-R2hardtesttola(mum,:)=R2hard;
-R2softtrainingtola(mum,:)=R2softt;
-R2softtesttola(mum,:)=R2soft;
+R2hardtraininguniee(mum,:)=R2hardt;
+R2hardtestuniee(mum,:)=R2hard;
+R2softtraininguniee(mum,:)=R2softt;
+R2softtestuniee(mum,:)=R2soft;
 Bigwallclock(mum,:)=tt; 
 stdbig(:,mum)=stdclem;
 R2evolve{mum,1}=R2_allmm;
@@ -5296,10 +5296,10 @@ cd(oldfolder) % setting original directory
 folder = 'Results_MM_MM';
 mkdir(folder);
 tt=toc;
-fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtrainingtola == min(R2hardtrainingtola)),min(R2hardtrainingtola));
-fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtesttola == min(R2hardtesttola)),min(R2hardtesttola));
-fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtrainingtola == min(R2softtrainingtola)),min(R2softtrainingtola));
-fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtesttola == min(R2softtesttola)),min(R2softtesttola));
+fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtraininguniee == min(R2hardtraininguniee)),min(R2hardtraininguniee));
+fprintf('The best realisation for hard R2 testing accuracy is number %d with value %4.4f \n',find(R2hardtestuniee == min(R2hardtestuniee)),min(R2hardtestuniee));
+fprintf('The best realisation for soft R2 training accuracy is number %d with value %4.4f \n',find(R2softtraininguniee == min(R2softtraininguniee)),min(R2softtraininguniee));
+fprintf('The best realisation for soft R2 testing accuracy is number %d with value %4.4f \n',find(R2softtestuniee == min(R2softtestuniee)),min(R2softtestuniee));
 
 cd(folder)
 save('predict_hard.out','Hardbig','-ascii')
@@ -5309,10 +5309,10 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-save('R2hardtraining.out','R2hardtrainingtola','-ascii')
-save('R2hardtesting.out','R2hardtesttola','-ascii')
-save('R2softtraining.out','R2softtrainingtola','-ascii')
-save('R2softtesting.out','R2softtesttola','-ascii')
+save('R2hardtraining.out','R2hardtraininguniee','-ascii')
+save('R2hardtesting.out','R2hardtestuniee','-ascii')
+save('R2softtraining.out','R2softtraininguniee','-ascii')
+save('R2softtesting.out','R2softtestuniee','-ascii')
 save('Bigwallclock.out','Bigwallclock','-ascii')
 cd(oldfolder)
 
@@ -5320,7 +5320,7 @@ xx=[1:iterra]';
 
 figure()
 subplot(2,2,1)
-plot(xx,R2hardtrainingtola,'r','LineWidth',1)
+plot(xx,R2hardtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5330,7 +5330,7 @@ set(gcf,'color','white')
 legend('random-MM','location','northeast');
 
 subplot(2,2,2)
-plot(xx,R2hardtesttola,'r','LineWidth',1)
+plot(xx,R2hardtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
@@ -5340,7 +5340,7 @@ set(gcf,'color','white')
 legend('random-MM','location','northeast');
 
 subplot(2,2,3)
-plot(xx,R2softtrainingtola,'r','LineWidth',1)
+plot(xx,R2softtraininguniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations')
@@ -5350,7 +5350,7 @@ set(gcf,'color','white')
 legend('random-MM','location','northeast');
 
 subplot(2,2,4)
-plot(xx,R2softtesttola,'r','LineWidth',1)
+plot(xx,R2softtestuniee,'r','LineWidth',1)
 xlim([1 iterra])
 ylabel('R2 in %') 
 xlabel('Realisations') 
