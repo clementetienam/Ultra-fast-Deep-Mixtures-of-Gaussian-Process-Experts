@@ -4,7 +4,7 @@ close all;
 disp('@Author: Dr Clement Etienam')
 disp('@Supervisor: Professor Kody Law')
 disp('@Collaborator External : Professor Sara Wade')
-disp('Ultra fast Deep Mixture of  Sparse Gaussian Experts')
+disp('Ultra fast Deep Mixture of Gaussian Process Experts')
 disp('Ths code is flexible and constructs a supervised learning model')
 disp(' Three broader schemes are presented')
 disp('1: Standard approaches void of any ensemble computation')
@@ -290,7 +290,7 @@ if mummy==1
     elseif Datause ==2
         Experts=7;
     elseif Datause ==3
-    Experts=3;
+    Experts=4;
     elseif Datause ==4
     Experts=2; 
     elseif Datause ==5
@@ -452,10 +452,10 @@ end
 
 tt=toc;
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -471,11 +471,11 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
 disp('*******************************************************************')
 
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -529,7 +529,7 @@ ind_test=reshape(ind_test,[],1);
 
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
+parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
@@ -726,10 +726,10 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -745,10 +745,10 @@ stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -801,7 +801,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
+parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
@@ -960,9 +960,9 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Unseen_soft_prediction_clement(weights_updated,...
@@ -975,9 +975,9 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -1028,7 +1028,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
+parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder) 
 end
 disp('*******************************************************************')
@@ -1256,7 +1256,7 @@ if mummy==1
     elseif Datause ==2
         Experts=7;
     elseif Datause ==3
-    Experts=6;
+    Experts=4;
     elseif Datause ==4
     Experts=4; 
         elseif Datause ==5
@@ -1428,11 +1428,11 @@ end
 
 tt=toc;
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn(weights_updated,...
-    dd_tola,X_train,y_train,Class_all,Experts);
+    dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn...
@@ -1444,11 +1444,11 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
 disp('*******************************************************************')
 [Valueehard,costhard]=prediction_clement_dnn(weights_updated,...
-    dd_tola,X_test,y_test,Class_all,Experts);
+    dd_unie,X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
 [Valueesoft,costsoft]=Unseen_soft_prediction_clement_dnn...
@@ -1495,7 +1495,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
@@ -1684,11 +1684,11 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn(weights_updated,...
-    dd_tola,X_train,y_train,Class_all,Experts);
+    dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn...
@@ -1700,10 +1700,10 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,costhard]=prediction_clement_dnn(weights_updated,dd_tola,...
+[Valueehard,costhard]=prediction_clement_dnn(weights_updated,dd_unie,...
     X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -1753,7 +1753,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
@@ -1896,10 +1896,10 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 [Valueehardtr,costhardt]=prediction_clement_dnn(weights_updated,...
-    dd_tola,X_train,y_train,Class_all,Experts);
+    dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn...
     (weights_updated,modelNN,X_train,y_train,Class_all,Experts);
@@ -1910,10 +1910,10 @@ hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
 [Valueehard,costhard]=prediction_clement_dnn(weights_updated,...
-    dd_tola,X_test,y_test,Class_all,Experts);
+    dd_unie,X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
 [Valueesoft,costsoft]=Unseen_soft_prediction_clement_dnn...
@@ -1959,7 +1959,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder) 
 end
 rmpath('CKS_DNN')
@@ -2240,7 +2240,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(net)
+parsave(net,[Xini,yini])
 cd(oldfolder)
 rmpath('CKS_MLP')
 rmpath('netlab')
@@ -2466,7 +2466,7 @@ if mummy==1
     elseif Datause ==2
         Experts=7;
     elseif Datause ==3
-    Experts=3;
+    Experts=4;
     elseif Datause ==4
     Experts=2; 
     elseif Datause ==5
@@ -2611,11 +2611,11 @@ end
 
 tt=toc;
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn_2...
-    (weights_updated,dd_tola,X_train,y_train,Class_all,Experts);
+    (weights_updated,dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn_2...
@@ -2627,11 +2627,11 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
 disp('*******************************************************************')
 [Valueehard,costhard]=prediction_clement_dnn_2...
-    (weights_updated,dd_tola,X_test,y_test,Class_all,Experts);
+    (weights_updated,dd_unie,X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
 [Valueesoft,costsoft]=Unseen_soft_prediction_clement_dnn_2...
@@ -2679,7 +2679,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
@@ -2858,11 +2858,11 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
 [Valueehardtr,costhardt]=prediction_clement_dnn_2(weights_updated,...
-    dd_tola,X_train,y_train,Class_all,Experts);
+    dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn_2...
@@ -2874,10 +2874,10 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,costhard]=prediction_clement_dnn_2(weights_updated,dd_tola,...
+[Valueehard,costhard]=prediction_clement_dnn_2(weights_updated,dd_unie,...
     X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -2927,7 +2927,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
@@ -3064,10 +3064,10 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 [Valueehardtr,costhardt]=prediction_clement_dnn_2(weights_updated,...
-    dd_tola,X_train,y_train,Class_all,Experts);
+    dd_unie,X_train,y_train,Class_all,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement_dnn_2...
     (weights_updated,modelNN,X_train,y_train,Class_all,Experts);
@@ -3078,10 +3078,10 @@ hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
 [Valueehard,costhard]=prediction_clement_dnn_2(weights_updated,...
-    dd_tola,X_test,y_test,Class_all,Experts);
+    dd_unie,X_test,y_test,Class_all,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
 [Valueesoft,costsoft]=Unseen_soft_prediction_clement_dnn_2...
@@ -3127,7 +3127,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy)
+parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder) 
 end      
 disp('*******************************************************************')
@@ -3387,7 +3387,7 @@ ind_train=reshape(ind_train,[],1);
 ind_test=reshape(ind_test,[],1);
 save('Train_indices.out','ind_train','-ascii')
 save('Test_indices.out','ind_test','-ascii')
-parsave(net)
+parsave(net,[Xini,yini])
 cd(oldfolder)  
 rmpath('CKS_MLP')
 rmpath('netlab')
@@ -3601,7 +3601,7 @@ if mummy==1
     elseif Datause ==2
         Experts=7;
     elseif Datause ==3
-    Experts=3;
+    Experts=4;
     elseif Datause ==4
     Experts=2; 
     elseif Datause ==5
@@ -3702,10 +3702,10 @@ end
 
 tt=toc;
 %% Prediction on Training data Training accuracy);
-dd_tola = str2double(predict(Mdl,X_train));
+dd_unie = str2double(predict(Mdl,X_train));
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_unie,...
     X_train,y_train,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -3721,11 +3721,11 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-dd_tola = str2double(predict(Mdl,X_test)); % Predicts the Labels 
+dd_unie = str2double(predict(Mdl,X_test)); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
 disp('*******************************************************************')
 
-[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_unie,X_test,...
     y_test,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -3779,7 +3779,7 @@ save('Test_indices.out','ind_test','-ascii')
 save('combo.out','Ultimate_clement','-ascii')
 save('Experts.out','Experts','-ascii')
 save('Method.out','method','-ascii')
-parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+parsave(weights_updated,Mdl,Class_all,clfy,clfx,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
@@ -3959,10 +3959,10 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-dd_tola= str2double(predict(Mdl,X_train));
+dd_unie= str2double(predict(Mdl,X_train));
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_unie,...
     X_train,y_train,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -3978,10 +3978,10 @@ stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
-dd_tola= str2double(predict(Mdl,X_test));
+dd_unie= str2double(predict(Mdl,X_test));
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_unie,X_test,...
     y_test,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -4033,7 +4033,7 @@ save('Test_indices.out','ind_test','-ascii')
 save('combo.out','Ultimate_clement','-ascii')
 save('Experts.out','Experts','-ascii')
 save('Method.out','method','-ascii')
-parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+parsave(weights_updated,Mdl,Class_all,clfy,clfx,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
@@ -4176,9 +4176,9 @@ saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
 
-dd_tola= str2double(predict(Mdl,X_train));
+dd_unie= str2double(predict(Mdl,X_train));
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_RF(weights_updated,dd_unie,...
     X_train,y_train,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Soft_prediction_RF(weights_updated,...
@@ -4191,9 +4191,9 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-[dd_tola]= str2double(predict(Mdl,X_test));
+[dd_unie]= str2double(predict(Mdl,X_test));
 disp('predict Hard Prediction on test data')
-[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_RF(weights_updated,dd_unie,X_test,...
     y_test,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -4241,7 +4241,7 @@ save('Test_indices.out','ind_test','-ascii')
 save('combo.out','Ultimate_clement','-ascii')
 save('Experts.out','Experts','-ascii')
 save('Method.out','method','-ascii')
-parsave(weights_updated,Mdl,Class_all,clfy,clfx)
+parsave(weights_updated,Mdl,Class_all,clfy,clfx,[Xini,yini])
 cd(oldfolder)     
 end   
  
@@ -4498,7 +4498,7 @@ if mummy==1
 elseif Datause ==2
     Experts=7;
 elseif Datause ==3
-Experts=3;
+Experts=4;
 elseif Datause ==4
 Experts=2; 
     elseif Datause ==5
@@ -4667,10 +4667,10 @@ end
 
 tt=toc;
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -4683,11 +4683,11 @@ disp('*******************************************************************')
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
 disp('*******************************************************************')
 
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -4967,10 +4967,10 @@ tt=toc;
 
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -4984,10 +4984,10 @@ hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -5249,10 +5249,10 @@ R2now=R2;
  end
        
 %% Prediction on Training data Training accuracy);
-[dd_tola,~] = predictNN(X_train, modelNN); % Predicts the Labels 
+[dd_unie,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on training data')
 [Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,...
-    dd_tola,X_train,y_train,Xtrains,ytrains,Experts);
+    dd_unie,X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,costsoftt]=Unseen_soft_prediction_clement(weights_updated,modelNN,X_train,y_train,Xtrains,ytrains,Experts);
 R2hardt=costhardt.R2;
@@ -5261,9 +5261,9 @@ R2softt=costsoftt.R2;
 hardtr=clfy.inverse_transform(Valueehardtr);
 softtr=clfy.inverse_transform(Valueesoftt);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,D] = predictNN(X_test, modelNN); % Predicts the Labels 
+[dd_unie,D] = predictNN(X_test, modelNN); % Predicts the Labels 
 disp('predict Hard Prediction on test data')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -5667,7 +5667,7 @@ if mummy==1
 elseif Datause ==2
     Experts=7;
 elseif Datause ==3
-Experts=3;
+Experts=4;
 elseif Datause ==4
 Experts=2; 
     elseif Datause ==5
@@ -5870,8 +5870,9 @@ parfor ik=1:Experts
 end
            
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
-[modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
-               hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
+% [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
+%                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
+ modelNN=Classify_Clement(X_train,dd_updated,Experts);          
  %[dd_updated,D] = predictNN(X_train, modelNN); % Predicts the Labels        
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
      y_train,Xtrains,ytrains,Experts);
@@ -5954,10 +5955,10 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
 disp('*******************************************************************')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 disp('*******************************************************************')
@@ -5973,10 +5974,10 @@ stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
 
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test')
 disp('*******************************************************************')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,...
     X_test,y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test')
 disp('*******************************************************************')
@@ -6029,7 +6030,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
+parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
@@ -6176,9 +6177,9 @@ cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
 %% Prediction on Training data Training accuracy);
-[dd_tola,~]=pred_class(X_train,modelNN);
+[dd_unie,~]=pred_class(X_train,modelNN);
 disp('predict Hard Prediction on training data')
-[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_tola,...
+[Valueehardtr,stdtr,costhardt]=prediction_clement(weights_updated,dd_unie,...
     X_train,y_train,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on training data')
 [Valueesoftt,sstdtr,costsoftt]=Unseen_soft_prediction_clement(weights_updated,...
@@ -6191,9 +6192,9 @@ softtr=clfy.inverse_transform(Valueesoftt);
 stdtr=clfy.inverse_transform_var(stdtr);
 sstdtr=clfy.inverse_transform_var(sstdtr);
 %% Prediction on Test data (Test accuracy)
-[dd_tola,~]=pred_class(X_test,modelNN);
+[dd_unie,~]=pred_class(X_test,modelNN);
 disp('predict Hard Prediction on test data')
-[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_tola,X_test,...
+[Valueehard,stdte,costhard]=prediction_clement(weights_updated,dd_unie,X_test,...
     y_test,Xtrains,ytrains,Experts);
 disp('predict Soft Prediction on test data')
 disp('*******************************************************************')
@@ -6245,7 +6246,7 @@ save('R2evolution.out','R2_allmm','-ascii')
 save('L2evolution.out','L2_allmm','-ascii')
 save('RMSEevolution.out','RMSE_allmm','-ascii')
 save('Valueevolution.out','valueallmm','-ascii')
-parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains)
+parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder) 
 
 end
