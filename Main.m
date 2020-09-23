@@ -239,8 +239,8 @@ file55 = fopen('Data_Summary.out','w+');
 disp('*******************************************************************')
 disp('SELECT OPTION FOR TRAINING THE MODEL')
 disp('1:CCR')
-disp('2:CCR-MM')
-disp('3:MM-MM')
+disp('2:MM')
+disp('3:MMr')
 method=input('Enter the learning scheme desired: ');
 if method > 3
 error('Wrong choice please select 1-3')
@@ -385,6 +385,11 @@ initial_nn_params = randInitializeWeights(layers);
 %% Choices used in the paper
 
 end
+nnclem_layer= input('Enter the Number of hidden layer required (2-5): ');
+if (nnclem_layer > 5) || (nnclem_layer < 2)
+error('Wrong choice please select 2-5')
+end
+
  sd=1;
  rng(sd); % set random number generator with seed sd
 %% Start Simulations for CCR,CCR-MM and MM-MM
@@ -413,7 +418,7 @@ disp('*******************************************************************')
 disp('DO CLASSIFICATION STEP')
 % [modelNN,updated_classtheta] = learnNN(X_train, dd, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
-modelNN=Classify_Clement(X_train,dd,Experts);
+modelNN=Classify_Clement(X_train,dd,Experts,nnclem_layer);
 %[dd,~] = predictNN(X_train, modelNN); % Predicts the Labels 
 
 [dd,~]=pred_class(X_train,modelNN);
@@ -533,7 +538,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
-disp('CCR-MM SCHEME')
+disp('MM SCHEME')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -552,7 +557,7 @@ idx = kmeans(Data,Experts,'MaxIter',500);
 dd=idx; 
 disp('*******************************************************************')
 disp('DO CLASSIFICATION STEP')
-modelNN=Classify_Clement(X_train,dd,Experts);
+modelNN=Classify_Clement(X_train,dd,Experts,nnclem_layer);
 [dd,~]=pred_class(X_train,modelNN);
 diff_c=max(y_train)-min(y_train);
 Class_all=cell(Experts,1);
@@ -635,7 +640,7 @@ parfor ik=1:Experts
 end
            
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
- modelNN=Classify_Clement(X_train,dd_updated,Experts);      
+ modelNN=Classify_Clement(X_train,dd_updated,Experts,nnclem_layer);      
  %[dd_updated,D] = predictNN(X_train, modelNN); % Predicts the Labels        
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
      y_train,Xtrains,ytrains,Experts);
@@ -688,7 +693,7 @@ end
  %%
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_CCR_MM';
+folder = 'Results_MM';
 mkdir(folder);
 tt=toc;
 geh=[RMSEccr; RMSE_allmm];
@@ -702,7 +707,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
@@ -711,7 +716,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
@@ -721,7 +726,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -805,7 +810,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+  disp('MMr SCHEME') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -866,7 +871,7 @@ else
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
 end
 
-modelNN=Classify_Clement(X_train,dd_updated,Experts);
+modelNN=Classify_Clement(X_train,dd_updated,Experts,nnclem_layer);
 
 
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
@@ -917,12 +922,10 @@ parfor ik=1:Experts
  end
  fprintf('Finished Expert %d... .\n', ik);     
 end 
-% [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
-%                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_MM_MM';
+folder = 'Results_MMr';
 mkdir(folder);
 tt=toc;
 geh=[RMSE_allmm];
@@ -936,7 +939,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2_allmm],'r','LineWidth',1)
@@ -945,7 +948,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2_allmm],'r','LineWidth',1)
@@ -955,7 +958,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -1035,7 +1038,6 @@ disp('*******************************************************************')
 rmpath('CKS')
 rmpath(mydir)
 disp('PROGRAM EXECUTED SUCCESFULLY')
-
     case 2
  %%
 disp('*******************************************************************')
@@ -1215,8 +1217,8 @@ file55 = fopen('Data_Summary.out','w+');
 disp('*******************************************************************')
 disp('SELECT OPTION FOR TRAINING THE MODEL')
 disp('1:CCR')
-disp('2:CCR-MM')
-disp('3:MM-MM')
+disp('2:MM')
+disp('3:MMr')
 method=input('Enter the learning scheme desired: ');
 if method > 3
 error('Wrong choice please select 1-3')
@@ -1500,7 +1502,7 @@ cd(oldfolder)
 
 elseif method==2
 disp('*******************************************************************')    
-disp('CCR-MM SCHEME')
+disp('MM SCHEME')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -1646,7 +1648,7 @@ end
  %%
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_CCR_MM';
+folder = 'Results_MM';
 mkdir(folder);
 tt=toc;
 geh=[RMSEccr; RMSE_allmm];
@@ -1660,7 +1662,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
@@ -1669,7 +1671,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
@@ -1679,7 +1681,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -1757,7 +1759,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+  disp('MMr SCHEME') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -1858,7 +1860,7 @@ end
 %%           
 %oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_MM_MM';
+folder = 'Results_MMr';
 mkdir(folder);
 tt=toc;
 geh=[RMSE_allmm];
@@ -1872,7 +1874,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2_allmm],'r','LineWidth',1)
@@ -1881,7 +1883,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2_allmm],'r','LineWidth',1)
@@ -1891,7 +1893,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -2683,7 +2685,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
-disp('-------------------------CCR-MM SCHEME----------------------------')
+disp('-------------------------MM SCHEME----------------------------')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -2820,7 +2822,7 @@ end
  %%
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_CCR_MM';
+folder = 'Results_MM';
 mkdir(folder);
 tt=toc;
 geh=[RMSEccr; RMSE_allmm];
@@ -2834,7 +2836,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
@@ -2843,7 +2845,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
@@ -2853,7 +2855,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -2931,7 +2933,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-disp('-----------------------------MM-MM SCHEME---------------------------') 
+disp('-----------------------------MMr SCHEME---------------------------') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -3026,7 +3028,7 @@ end
 %%           
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_MM_MM';
+folder = 'Results_MMr';
 mkdir(folder);
 tt=toc;
 geh=[RMSE_allmm];
@@ -3040,7 +3042,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2_allmm],'r','LineWidth',1)
@@ -3049,7 +3051,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2_allmm],'r','LineWidth',1)
@@ -3059,7 +3061,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -3648,8 +3650,8 @@ cd(oldfolder) % setting original directory
 disp('*******************************************************************')
 disp('SELECT OPTION FOR TRAINING THE MODEL')
 disp('1:CCR')
-disp('2:CCR-MM')
-disp('3:MM-MM')
+disp('2:MM')
+disp('3:MMr')
 method=input('Enter the learning scheme desired: ');
 if method > 3
 error('Wrong choice please select 1-3')
@@ -3783,7 +3785,7 @@ parsave(weights_updated,Mdl,Class_all,clfy,clfx,[Xini,yini])
 cd(oldfolder)
 
 elseif method==2
-disp('CCR-MM SCHEME')
+disp('MM SCHEME')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -3921,7 +3923,7 @@ end
 oldfolder=cd;
 cd(oldfolder) % setting original directory
 %folder = strcat('Results_CCR_MM', sprintf('%.3d',jjm));
-folder='Results_CCR_MM';
+folder='Results_MM';
 mkdir(folder);
 tt=toc;
 geh=[RMSEccr; RMSE_allmm];
@@ -3935,7 +3937,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
@@ -3944,7 +3946,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
@@ -3954,7 +3956,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -4037,7 +4039,7 @@ parsave(weights_updated,Mdl,Class_all,clfy,clfx,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('MM-MM SCHEME') 
+  disp('MMr SCHEME') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -4151,7 +4153,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2_allmm],'r','LineWidth',1)
@@ -4160,7 +4162,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2_allmm],'r','LineWidth',1)
@@ -4170,7 +4172,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -4445,8 +4447,8 @@ file55 = fopen('Data_Summary.out','w+');
 disp('*******************************************************************')
 disp('SELECT OPTION FOR TRAINING THE MODEL')
 disp('1:CCR')
-disp('2:CCR-MM')
-disp('3:MM-MM')
+disp('2:MM')
+disp('3:MMr')
 method=input('Enter the learning scheme desired: ');
 if method > 2
 error('Wrong choice please select 1-3')
@@ -4799,7 +4801,7 @@ RMSEevolve=cell(iterra,1);
     for mum=1:iterra
 disp('*******************************************************************')          
 fprintf('Finished realisation %d... .\n', mum);           
-disp('---------------------------CCR-MM SCHEME---------------------------')
+disp('---------------------------MM SCHEME---------------------------')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -5026,7 +5028,7 @@ fprintf('The best realisation for soft R2 testing accuracy is number %d with val
 
     
     
-folder = 'Results_CCR_MM';
+folder = 'Results_MM';
 mkdir(folder);
 cd(folder)
 save('predict_hard.out','Hardbig','-ascii')
@@ -5054,7 +5056,7 @@ xlabel('Realisations')
 title('R2 hard training accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,R2hardtestuniee,'r','LineWidth',1)
@@ -5064,7 +5066,7 @@ xlabel('Realisations')
 title('R2 hard testing accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,R2softtraininguniee,'r','LineWidth',1)
@@ -5074,7 +5076,7 @@ xlabel('Realisations')
 title('R2 soft training accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,4)
 plot(xx,R2softtestuniee,'r','LineWidth',1)
@@ -5084,7 +5086,7 @@ xlabel('Realisations')
 title('R2 soft testing accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -5155,7 +5157,7 @@ save('RMSEevolve.mat', 'RMSEevolve')
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-  disp('-----------------------MM-MM SCHEME-------------------------------') 
+  disp('-----------------------MMr SCHEME-------------------------------') 
 %  parpool('cluster1',8) 
 R2evolve=cell(iterra,1); 
 L2evolve=cell(iterra,1); 
@@ -5293,7 +5295,7 @@ fprintf('Finished realisation %d... .\n', mum);
 end
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_MM_MM';
+folder = 'Results_MMr';
 mkdir(folder);
 tt=toc;
 fprintf('The best realisation for hard R2 training accuracy is number %d with value %4.4f \n',find(R2hardtraininguniee == min(R2hardtraininguniee)),min(R2hardtraininguniee));
@@ -5327,7 +5329,7 @@ xlabel('Realisations')
 title('R2 hard training accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('random-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,2)
 plot(xx,R2hardtestuniee,'r','LineWidth',1)
@@ -5337,7 +5339,7 @@ xlabel('Realisations')
 title('R2 hard testing accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('random-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,3)
 plot(xx,R2softtraininguniee,'r','LineWidth',1)
@@ -5347,7 +5349,7 @@ xlabel('Realisations')
 title('R2 soft training accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('random-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,4)
 plot(xx,R2softtestuniee,'r','LineWidth',1)
@@ -5357,7 +5359,7 @@ xlabel('Realisations')
 title('R2 soft testing accuracy in % ')
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('random-MM','location','northeast');
+legend('MMr','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -5761,13 +5763,17 @@ initial_nn_params = randInitializeWeights(layers);
 %% Choices used in the paper
 
 end
+nnclem_layer= input('Enter the Number of hidden layer required (2-5): ');
+if (nnclem_layer > 5) || (nnclem_layer < 2)
+error('Wrong choice please select 2-5')
+end
  sd=1;
  rng(sd); % set random number generator with seed sd
 %% Start Simuations for CCR,CCR-MM and MM-MM
 oldfolder=cd;
 cd(oldfolder) % setting original directory
 if method==1
-disp('CCR-MM SCHEME')
+disp('MM SCHEME')
 disp('*******************************************************************')
 tic;
 if size (X_train,1)==1
@@ -5786,7 +5792,7 @@ idx = kmeans(Data,Experts,'MaxIter',500);
 dd=idx; 
 disp('*******************************************************************')
 disp('DO CLASSIFICATION STEP')
-modelNN=Classify_Clement(X_train,dd,Experts);
+modelNN=Classify_Clement(X_train,dd,Experts,nnclem_layer);
 [dd,~]=pred_class(X_train,modelNN);
 
 diff_c=max(y_train)-min(y_train);
@@ -5872,7 +5878,7 @@ end
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
 % [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
 %                hiddenLayers,layers,randInitializeWeights(layers),nnOptions );
- modelNN=Classify_Clement(X_train,dd_updated,Experts);          
+ modelNN=Classify_Clement(X_train,dd_updated,Experts,nnclem_layer);          
  %[dd_updated,D] = predictNN(X_train, modelNN); % Predicts the Labels        
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
      y_train,Xtrains,ytrains,Experts);
@@ -5917,7 +5923,7 @@ end
  %%
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_CCR_MM';
+folder = 'Results_MM';
 mkdir(folder);
 tt=toc;
 geh=[RMSEccr; RMSE_allmm];
@@ -5931,7 +5937,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2ccr; R2_allmm],'r','LineWidth',1)
@@ -5940,7 +5946,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2ccr; L2_allmm],'r','LineWidth',1)
@@ -5950,7 +5956,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('CCR-MM','location','northeast');
+legend('MM','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
@@ -6034,7 +6040,7 @@ parsave(weights_updated,modelNN,Class_all,clfy,Xtrains,ytrains,[Xini,yini])
 cd(oldfolder)
 else
 disp('*******************************************************************')    
-disp('---------------------------MM-MM SCHEME----------------------------') 
+disp('---------------------------MMr SCHEME----------------------------') 
 %  parpool('cluster1',8) 
 tic;
  R2now=0; 
@@ -6095,7 +6101,7 @@ else
 dd_updated = MM_clement(weights_updated,X_train,y_train,modelNN,Class_all,Experts);
 end
 
-modelNN=Classify_Clement(X_train,dd,Experts);
+modelNN=Classify_Clement(X_train,dd_updated,Experts,nnclem_layer);
 
  [Valuee,~,cost2]=prediction_clement(weights_updated,dd_updated,X_train,...
      y_train,Xtrains,ytrains,Experts);
@@ -6134,12 +6140,10 @@ parfor ik=1:Experts
  end
  fprintf('Finished Expert %d... .\n', ik);     
 end 
-% [modelNN,updated_classtheta] = learnNN(X_train, dd_updated, nrOfLabels,input_layer_size,...
-%                hiddenLayers,layers,randInitializeWeights(layers),nnOptions ); 
 %%           
 oldfolder=cd;
 cd(oldfolder) % setting original directory
-folder = 'Results_MM_MM';
+folder = 'Results_MMr';
 mkdir(folder);
 tt=toc;
 geh=[RMSE_allmm];
@@ -6153,7 +6157,7 @@ ylabel('RMSE')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,2)
 plot(xx,[R2_allmm],'r','LineWidth',1)
@@ -6162,7 +6166,7 @@ ylabel('R2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 
 subplot(2,2,3)
 plot(xx,[L2_allmm],'r','LineWidth',1)
@@ -6172,7 +6176,7 @@ ylabel('L2 accuracy in %')
 xlabel('iterations') 
 set(gca, 'FontName','Helvetica', 'Fontsize', 13)
 set(gcf,'color','white')
-legend('MM-MM','location','northeast');
+legend('MMr','location','northeast');
 cd(folder)
 saveas(gcf,'performance_a.fig')
 cd(oldfolder)
